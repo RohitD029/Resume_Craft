@@ -1,15 +1,19 @@
 const express = require("express");
 const app = express();//app is like blueprint instance for server creation
-const db = require("./config/db");//add always to start
 const connectDB = require("./config/db");
 
 require("dotenv").config();
 
-const bodyparser = require("body-parser");
-app.use(bodyparser.json());//stores in req.body
+//Middleware
+app.use(express.json());
 
 //connect to MongoDB
 connectDB();
+
+//import resume routes
+const resumeRoutes = require('./routes/resumeRoutes');
+app.use('/api/resume', resumeRoutes); 
+
 app.get('/',(req, res) => {
   res.send('Hello Users Welcome to our Resume Craft')
 })
