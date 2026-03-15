@@ -89,6 +89,11 @@ const resumeSchema = new mongoose.Schema({
     {
       type: String
     }
+  ],
+  languages:[
+    {
+      type : String
+    }
   ]
 
 }, { timestamps: true });

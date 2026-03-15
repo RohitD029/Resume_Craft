@@ -1,82 +1,84 @@
-// Select login form
-const loginForm = document.getElementById("loginarea");
-const notfound = document.getElementById("notfound");
-
-/*LOGIN LOGIC*/
-
-if (loginForm) {
-    loginForm.addEventListener("submit", function (e) {
-        e.preventDefault();
-
-        const inputs = loginForm.querySelectorAll("input");
-        const enteredUsername = inputs[0].value;
-        const enteredPassword = inputs[1].value;
-
-        if (!enteredUsername || !enteredPassword) {
-            alert("Please fill all fields");
-            return;
-        }
-        const storedUser = JSON.parse(localStorage.getItem("user"));
-
-        if (!storedUser) {
-            notfound.innerText="User Not Found!";
-            notfound.style.color = "red";
-            notfound.style.display = "block";
-            return;
-        }
-
-        if (
-            enteredUsername === storedUser.username &&
-            enteredPassword === storedUser.password
-        ) {
-            localStorage.setItem("loggedIn", "true");
-            window.location.href = "dashboard.html";
-        } else {
-            notfound.innerText="Incorrect Username or password";
-            notfound.style.color = "red";
-            notfound.style.display = "block";
-        }
-    });
-}
-
-/* ================= REGISTER LOGIC ================= */
-
+//signup
 const registerForm = document.querySelector(".registercontainer form");
 
-
 if (registerForm) {
-    registerForm.addEventListener("submit", function (e) {
+    registerForm.addEventListener("submit", async function (e) {
         e.preventDefault();
 
         const inputs = registerForm.querySelectorAll("input");
-        const roleSelect = document.getElementById("role");
-
 
         const userData = {
-            fullname: inputs[0].value,
+            name: inputs[0].value,
             username: inputs[1].value,
             password: inputs[2].value,
-            emailid: inputs[3].value,
-            collegename: inputs[4].value,
-            role: roleSelect.value,
-            phonenumber: inputs[5].value
+            email: inputs[3].value
         };
 
-        if (!userData.role) {
-            alert("Please select Year");
-            return;
-        }
-        for (let key in userData) {
-            if (!userData[key]) {
-                alert("Please fill all fields");
-                return;
-            }
-        }
-        localStorage.setItem("user", JSON.stringify(userData));
+        try {
 
-        alert("Registration successful!");
-        window.location.href = "login.html"; // back to login
+            const res = await fetch("http://localhost:3000/api/users/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(userData)
+            });
+
+            const data = await res.json();
+
+            alert("Registration successful!");
+            window.location.href = "login.html";
+
+        } catch (error) {
+            console.error(error);
+            alert("Error registering user");
+        }
     });
 }
 
+//login
+const loginForm = document.getElementById("loginarea");
+const notfound = document.getElementById("notfound");
 
+if (loginForm) {
+    loginForm.addEventListener("submit", async function (e) {
+
+        e.preventDefault();
+
+        const inputs = loginForm.querySelectorAll("input");
+
+        const username = inputs[0].value;
+        const password = inputs[1].value;
+
+        try {
+
+            const res = await fetch("http://localhost:3000/api/users/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            const data = await res.json();
+
+            if (res.status === 200) {
+
+                alert("Login Successful");
+                window.location.href = "dashboard.html";
+
+            } else {
+
+                notfound.innerText = data.message;
+                notfound.style.display = "block";
+            }
+
+        } catch (error) {
+
+            console.error(error);
+            alert("Server error");
+
+        }
+
+    });
+}

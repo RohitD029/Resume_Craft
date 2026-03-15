@@ -90,190 +90,190 @@
 
 <script>
 
-const form = document.getElementById("resumeForm");
-const selector = document.getElementById("templateSelector");
+// const form = document.getElementById("resumeForm");
+// const selector = document.getElementById("templateSelector");
 
-form.addEventListener("submit", async function (e) {
+// form.addEventListener("submit", async function (e) {
 
-e.preventDefault();
+// e.preventDefault();
 
-let name = document.getElementById("inputname").value;
-let skills = document.getElementById("inputskill").value;
-let projects = document.getElementById("inputproject").value;
-let experience = document.getElementById("inputexperience").value;
+// let name = document.getElementById("inputname").value;
+// let skills = document.getElementById("inputskill").value;
+// let projects = document.getElementById("inputproject").value;
+// let experience = document.getElementById("inputexperience").value;
 
-let email = document.getElementById("inputEmail").value || "";
-let phone = document.getElementById("inputPhone").value || "";
-let location = document.getElementById("inputLocation").value || "";
-let linkedin = document.getElementById("inputLinkedin").value || "";
-let github = document.getElementById("inputGithub").value || "";
-let summary = document.getElementById("inputSummary").value || "";
+// let email = document.getElementById("inputEmail").value || "";
+// let phone = document.getElementById("inputPhone").value || "";
+// let location = document.getElementById("inputLocation").value || "";
+// let linkedin = document.getElementById("inputLinkedin").value || "";
+// let github = document.getElementById("inputGithub").value || "";
+// let summary = document.getElementById("inputSummary").value || "";
 
 
-let formattedSkills = skills
-.split(",")
-.filter((s) => s.trim() !== "")
-.map((s) => `<li>${s.trim()}</li>`)
-.join("");
+// let formattedSkills = skills
+// .split(",")
+// .filter((s) => s.trim() !== "")
+// .map((s) => `<li>${s.trim()}</li>`)
+// .join("");
 
 
-/* ---------- SAVE DATA TO BACKEND ---------- */
+// /* ---------- SAVE DATA TO BACKEND ---------- */
 
-const resumeData = {
+// const resumeData = {
 
-fullname: name,
-email: email,
-phone: phone,
-location: location,
+// fullname: name,
+// email: email,
+// phone: phone,
+// location: location,
 
-linkedinUrl: linkedin,
-gitUrl: github,
+// linkedinUrl: linkedin,
+// gitUrl: github,
 
-profsummary: summary,
+// profsummary: summary,
 
-skills: skills.split(",").map(s => s.trim()),
+// skills: skills.split(",").map(s => s.trim()),
 
-projects: [
-{
-title: projects,
-description: projects,
-tech: ""
-}
-],
+// projects: [
+// {
+// title: projects,
+// description: projects,
+// tech: ""
+// }
+// ],
 
-experience: [
-{
-company: "",
-role: experience,
-duration: ""
-}
-]
+// experience: [
+// {
+// company: "",
+// role: experience,
+// duration: ""
+// }
+// ]
 
-};
+// };
 
-try {
+// try {
 
-const response = await fetch("http://localhost:3000/api/resume", {
+// const response = await fetch("http://localhost:3000/api/resume", {
 
-method: "POST",
-headers: {
-"Content-Type": "application/json"
-},
-body: JSON.stringify(resumeData)
+// method: "POST",
+// headers: {
+// "Content-Type": "application/json"
+// },
+// body: JSON.stringify(resumeData)
 
-});
+// });
 
-const data = await response.json();
+// const data = await response.json();
 
-console.log("Saved in database:", data);
+// console.log("Saved in database:", data);
 
-} catch (error) {
+// } catch (error) {
 
-console.error("Error saving resume:", error);
+// console.error("Error saving resume:", error);
 
-}
+// }
 
 
-/* ---------- RESUME PREVIEW ---------- */
+// /* ---------- RESUME PREVIEW ---------- */
 
-let resumeHTML = `
+// let resumeHTML = `
 
-<div class="resume-header">
-<h1>${name}</h1>
+// <div class="resume-header">
+// <h1>${name}</h1>
 
-<p>
-${email} ${phone ? " | " + phone : ""} 
-${location ? " | " + location : ""} <br>
+// <p>
+// ${email} ${phone ? " | " + phone : ""} 
+// ${location ? " | " + location : ""} <br>
 
-${linkedin ? `<a href="${linkedin}" target="_blank">LinkedIn</a>` : ""}
+// ${linkedin ? `<a href="${linkedin}" target="_blank">LinkedIn</a>` : ""}
 
-${github ? ` | <a href="${github}" target="_blank">GitHub</a>` : ""}
+// ${github ? ` | <a href="${github}" target="_blank">GitHub</a>` : ""}
 
-</p>
+// </p>
 
-</div>
+// </div>
 
-<hr>
+// <hr>
 
-${summary ?
+// ${summary ?
 
-`
-<div class="section">
-<h2>Professional Summary</h2>
-<p>${summary}</p>
-</div>
+// `
+// <div class="section">
+// <h2>Professional Summary</h2>
+// <p>${summary}</p>
+// </div>
 
-`
-: ""
-}
+// `
+// : ""
+// }
 
-<div class="section">
-<h2>Technical Skills</h2>
-<ul>${formattedSkills}</ul>
-</div>
+// <div class="section">
+// <h2>Technical Skills</h2>
+// <ul>${formattedSkills}</ul>
+// </div>
 
-<div class="section">
-<h2>Projects</h2>
-<p>${projects}</p>
-</div>
+// <div class="section">
+// <h2>Projects</h2>
+// <p>${projects}</p>
+// </div>
 
-<div class="section">
-<h2>Experience</h2>
-<p>${experience}</p>
-</div>
+// <div class="section">
+// <h2>Experience</h2>
+// <p>${experience}</p>
+// </div>
 
-`;
+// `;
 
-document.querySelectorAll(".template").forEach((temp) => {
+// document.querySelectorAll(".template").forEach((temp) => {
 
-temp.innerHTML = resumeHTML;
+// temp.innerHTML = resumeHTML;
 
-});
+// });
 
-showSelectedTemplate();
+// showSelectedTemplate();
 
-});
+// });
 
 
-function showSelectedTemplate() {
+// function showSelectedTemplate() {
 
-const selected = selector.value;
+// const selected = selector.value;
 
-document.querySelectorAll(".template").forEach((temp) => {
-temp.classList.add("hidden");
-});
+// document.querySelectorAll(".template").forEach((temp) => {
+// temp.classList.add("hidden");
+// });
 
-document.getElementById(selected).classList.remove("hidden");
+// document.getElementById(selected).classList.remove("hidden");
 
-}
+// }
 
 
-selector.addEventListener("change", function () {
+// selector.addEventListener("change", function () {
 
-showSelectedTemplate();
+// showSelectedTemplate();
 
-});
+// });
 
 
-function downloadPDF() {
+// function downloadPDF() {
 
-const activeTemplate = document.querySelector(".template:not(.hidden)");
+// const activeTemplate = document.querySelector(".template:not(.hidden)");
 
-let options = {
+// let options = {
 
-margin: 0.5,
-filename: "My_Resume.pdf",
-image: { type: "jpeg", quality: 0.98 },
-html2canvas: { scale: 2 },
-jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
+// margin: 0.5,
+// filename: "My_Resume.pdf",
+// image: { type: "jpeg", quality: 0.98 },
+// html2canvas: { scale: 2 },
+// jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
 
-};
+// };
 
-html2pdf().set(options).from(activeTemplate).save();
+// html2pdf().set(options).from(activeTemplate).save();
 
-}
+// }
 
-showSelectedTemplate();
+// showSelectedTemplate();
 
 </script>
 
