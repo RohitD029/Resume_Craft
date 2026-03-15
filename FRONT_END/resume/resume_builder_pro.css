@@ -476,43 +476,119 @@ a:hover {
 }
 
 /* YOUR ORIGINAL TEMPLATE VARIANTS */
+.template {
+  font-family: "Inter", sans-serif;
+  line-height: 1.7;
+}
+
+.resume-header {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.resume-header h1 {
+  font-size: 34px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  letter-spacing: 1px;
+}
+
+.resume-header p {
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+/* Sections */
+
+.section {
+  margin-top: 28px;
+}
+
+.section h2 {
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--border);
+}
+
+.section p {
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.section ul {
+  padding-left: 20px;
+}
+
+.section li {
+  margin-bottom: 6px;
+}
+
 #template2 {
-  background: #111827;
-  color: white;
+  background: #0f172a;
+  color: #f1f5f9;
 }
-#template2 .section h2 {
-  color: #818cf8;
-  border-bottom: 2px solid #374151;
+
+#template2 .resume-header h1 {
+  color: #ffffff;
 }
+
 #template2 .resume-header p {
-  color: #d1d5db;
+  color: #cbd5f5;
 }
+
+#template2 .section h2 {
+  color: #a5b4fc;
+  border-bottom: 2px solid #334155;
+}
+
 #template2 .section p,
 #template2 .section li {
-  color: #e5e7eb;
+  color: #e2e8f0;
 }
 
 #template3 {
-  border-left: 6px solid var(--primary);
-  padding-left: 50px;
+  background: white;
+  border-left: 8px solid var(--primary);
+  padding-left: 45px;
+}
+
+#template3 .resume-header {
+  text-align: left;
+}
+
+#template3 .section h2 {
+  color: var(--primary);
+  border-bottom: 2px solid #c7d2fe;
 }
 
 #template4 {
-  background: #fafafa;
+  background: #f8fafc;
 }
+
+#template4 .resume-header h1 {
+  color: #134e4a;
+}
+
 #template4 .section h2 {
   color: #0f766e;
-  border-bottom-color: #99f6e4;
+  border-bottom: 2px solid #99f6e4;
 }
 
 #template5 {
   background: linear-gradient(135deg, #eef2ff, #fdf2f8);
 }
-#template5 .section h2 {
-  color: #7c3aed;
-  border-bottom-color: #ddd6fe;
+
+#template5 .resume-header h1 {
+  color: #5b21b6;
 }
 
+#template5 .section h2 {
+  color: #7c3aed;
+  border-bottom: 2px solid #ddd6fe;
+}
 /* Empty state */
 .empty-state {
   display: flex;
