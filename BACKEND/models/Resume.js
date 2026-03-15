@@ -84,13 +84,17 @@ const resumeSchema = new mongoose.Schema({
       }
     }
   ],
-
   achievements: [
     {
       type: String
     }
   ],
   languages:[
+    {
+      type : String
+    }
+  ],
+  certifications:[
     {
       type : String
     }
