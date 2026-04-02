@@ -381,4 +381,8 @@ Education: ${v('inpEducation') || 'Not provided'}`;
     }
 
     function quickAction(text) { sendMessage(text); }
+<<<<<<< HEAD
     function handleChatKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }
+=======
+    function handleChatKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }
+>>>>>>> 16da257fe120c97329dda9c8353b8f3fcee70c16
