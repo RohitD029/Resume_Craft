@@ -27,525 +27,178 @@
             --score-mid: #D97706;
             --score-low: #DC2626;
         }
-
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'DM Sans', sans-serif; }
+        body { background: var(--bg); color: var(--text-main); display: flex; height: 100vh; overflow: hidden; }
 
-        body {
-            background: var(--bg);
-            color: var(--text-main);
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        /* LEFT SIDEBAR */
+        /* ── Sidebar ── */
         .sidebar {
-            width: 380px;
-            background: var(--panel-bg);
-            border-right: 1px solid var(--border);
-            padding: 24px;
-            overflow-y: auto;
-            box-shadow: 4px 0 15px rgba(0,0,0,0.03);
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            z-index: 10;
+            width: 380px; background: var(--panel-bg); border-right: 1px solid var(--border);
+            padding: 24px; overflow-y: auto; box-shadow: 4px 0 15px rgba(0,0,0,.03);
+            display: flex; flex-direction: column; gap: 14px; z-index: 10; flex-shrink: 0;
         }
-
-        .header h1 {
-            font-size: 19px;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 3px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .header p { font-size: 12px; color: var(--text-muted); }
-
+        .header h1 { font-size: 19px; font-weight: 700; color: var(--primary); margin-bottom: 3px; display: flex; align-items: center; gap: 8px; }
+        .header p  { font-size: 12px; color: var(--text-muted); }
         .form-group { display: flex; flex-direction: column; gap: 6px; }
-
-        label {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-main);
-            text-transform: uppercase;
-            letter-spacing: 0.6px;
+        label { font-size: 11px; font-weight: 600; color: var(--text-main); text-transform: uppercase; letter-spacing: .6px; }
+        textarea, input[type="text"], input[type="password"] {
+            width: 100%; padding: 10px 12px; border: 1px solid var(--border);
+            border-radius: 8px; font-size: 13px; background: #F9FAFB;
+            transition: all .2s; font-family: 'DM Sans', sans-serif;
         }
-
-        textarea, input[type="text"] {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 13px;
-            background: #F9FAFB;
-            transition: all 0.2s;
-            font-family: 'DM Sans', sans-serif;
-        }
-        textarea:focus, input[type="text"]:focus {
-            outline: none;
-            border-color: var(--primary);
-            background: #fff;
-            box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
+        textarea:focus, input[type="text"]:focus, input[type="password"]:focus {
+            outline: none; border-color: var(--primary); background: #fff;
+            box-shadow: 0 0 0 3px rgba(79,70,229,.1);
         }
         textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
-
-        .char-counter {
-            font-size: 11px;
-            color: var(--text-muted);
-            text-align: right;
-            font-family: 'DM Mono', monospace;
-        }
-
+        .char-counter { font-size: 11px; color: var(--text-muted); text-align: right; font-family: 'DM Mono', monospace; }
         .btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 13px;
-            font-size: 14px;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            font-family: 'DM Sans', sans-serif;
+            background: var(--primary); color: white; border: none; padding: 13px;
+            font-size: 14px; font-weight: 600; border-radius: 8px; cursor: pointer;
+            transition: all .2s; display: flex; justify-content: center; align-items: center;
+            gap: 8px; font-family: 'DM Sans', sans-serif; width: 100%;
         }
-        .btn:hover { background: var(--primary-hover); transform: translateY(-1px); }
-        .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-        .btn.secondary {
-            background: white;
-            color: var(--primary);
-            border: 1px solid var(--border);
-        }
-        .btn.secondary:hover { background: var(--primary-light); }
-
+        .btn:hover:not(:disabled) { background: var(--primary-hover); transform: translateY(-1px); }
+        .btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
         .divider { height: 1px; background: var(--border); margin: 2px 0; }
+        .tip-box { background: var(--info-bg); border: 1px solid #BFDBFE; border-radius: 8px; padding: 10px 12px; font-size: 12px; color: #1e40af; line-height: 1.5; }
 
-        .tip-box {
-            background: var(--info-bg);
-            border: 1px solid #BFDBFE;
-            border-radius: 8px;
-            padding: 10px 12px;
-            font-size: 12px;
-            color: #1e40af;
-            line-height: 1.5;
+        /* Upload zone */
+        .upload-zone {
+            border: 2px dashed var(--border); border-radius: 10px; padding: 22px 16px;
+            text-align: center; cursor: pointer; background: #F9FAFB; transition: all .2s;
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
         }
+        .upload-zone:hover, .upload-zone.drag-over { border-color: var(--primary); background: var(--primary-light); }
+        .upload-zone-btn {
+            margin-top: 4px; background: var(--primary); color: white; border: none;
+            padding: 7px 16px; border-radius: 6px; font-size: 12px; font-weight: 600;
+            cursor: pointer; font-family: 'DM Sans', sans-serif; pointer-events: none;
+        }
+        .file-status {
+            display: none; align-items: center; justify-content: space-between;
+            background: var(--success-bg); border: 1px solid #A7F3D0; border-radius: 8px; padding: 8px 12px;
+        }
+        .file-status-name { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--success); font-weight: 500; }
+        .file-status-name span:last-child { max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .file-clear-btn { background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 14px; padding: 0 2px; }
+        .or-divider { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
+        .or-divider div { flex: 1; height: 1px; background: var(--border); }
+        .or-divider span { font-size: 11px; color: var(--text-muted); }
+        .paste-toggle-btn {
+            background: white; border: 1px solid var(--border); color: var(--text-muted);
+            font-size: 12px; font-weight: 500; padding: 7px 12px; border-radius: 8px;
+            cursor: pointer; font-family: 'DM Sans', sans-serif; transition: .2s; width: 100%;
+        }
+        .paste-toggle-btn:hover { border-color: var(--primary); color: var(--primary); }
+        .paste-area { display: none; flex-direction: column; gap: 4px; }
 
-        /* MAIN AREA */
+        /* ── Main ── */
         .main {
-            flex: 1;
-            padding: 28px;
-            overflow-y: auto;
+            flex: 1; padding: 28px; overflow-y: auto; min-width: 0;
             background: radial-gradient(circle at center, #F3F4F6 0%, #E5E7EB 100%);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+            display: flex; flex-direction: column; gap: 20px;
         }
+        .empty-state {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            height: 100%; min-height: 400px; text-align: center; gap: 16px; color: var(--text-muted);
+        }
+        .empty-state-icon { font-size: 52px; opacity: .6; }
+        .empty-state h3 { font-size: 18px; font-weight: 600; color: var(--text-main); }
+        .empty-state p  { font-size: 13px; line-height: 1.6; max-width: 300px; }
 
         /* Score Card */
-        .score-card {
-            background: var(--panel-bg);
-            border-radius: 16px;
-            padding: 28px 32px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.07);
-            display: flex;
-            align-items: center;
-            gap: 32px;
-        }
-
-        .score-ring-wrap {
-            position: relative;
-            width: 120px;
-            height: 120px;
-            flex-shrink: 0;
-        }
-
+        .score-card { background: var(--panel-bg); border-radius: 16px; padding: 28px 32px; box-shadow: 0 4px 16px rgba(0,0,0,.07); display: flex; align-items: center; gap: 32px; }
+        .score-ring-wrap { position: relative; width: 120px; height: 120px; flex-shrink: 0; }
         .score-ring-wrap svg { transform: rotate(-90deg); }
-
-        .score-ring-wrap .score-number {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 26px;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .score-number span {
-            font-size: 12px;
-            font-weight: 500;
-            color: var(--text-muted);
-        }
-
-        .score-meta { flex: 1; }
+        .score-number { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 26px; font-weight: 700; color: var(--text-main); }
+        .score-number span { font-size: 12px; font-weight: 500; color: var(--text-muted); }
+        .score-meta { flex: 1; min-width: 0; }
         .score-meta h2 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
-        .score-meta p { font-size: 13px; color: var(--text-muted); margin-bottom: 14px; }
+        .score-meta p  { font-size: 13px; color: var(--text-muted); margin-bottom: 14px; }
+        .score-breakdown { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .score-item { display: flex; flex-direction: column; gap: 4px; }
+        .score-item-label { font-size: 11px; color: var(--text-muted); font-weight: 500; }
+        .score-item-bar-wrap { display: flex; align-items: center; gap: 8px; }
+        .score-item-bar { flex: 1; height: 6px; background: #E5E7EB; border-radius: 99px; overflow: hidden; }
+        .score-item-fill { height: 100%; border-radius: 99px; width: 0%; transition: width .8s cubic-bezier(.4,0,.2,1); }
+        .score-item-val { font-size: 11px; font-weight: 600; color: var(--text-main); font-family: 'DM Mono', monospace; width: 28px; text-align: right; }
 
-        .score-breakdown {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-
-        .score-item {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .score-item-label {
-            font-size: 11px;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .score-item-bar-wrap {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .score-item-bar {
-            flex: 1;
-            height: 6px;
-            background: #E5E7EB;
-            border-radius: 99px;
-            overflow: hidden;
-        }
-
-        .score-item-fill {
-            height: 100%;
-            border-radius: 99px;
-            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .score-item-val {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-main);
-            font-family: 'DM Mono', monospace;
-            width: 28px;
-            text-align: right;
-        }
-
-        /* Analysis Sections */
-        .analysis-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        .analysis-card {
-            background: var(--panel-bg);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
+        /* Analysis Grid */
+        .analysis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .analysis-card { background: var(--panel-bg); border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.05); }
         .analysis-card.full { grid-column: 1 / -1; }
-
-        .card-title {
-            font-size: 13px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        /* Keyword tags */
+        .card-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; margin-bottom: 14px; display: flex; align-items: center; gap: 6px; }
         .keyword-list { display: flex; flex-wrap: wrap; gap: 6px; }
-
-        .keyword-tag {
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-            font-family: 'DM Mono', monospace;
-        }
-
-        .keyword-tag.found { background: var(--success-bg); color: var(--success); border: 1px solid #A7F3D0; }
-        .keyword-tag.missing { background: var(--danger-bg); color: var(--danger); border: 1px solid #FECACA; }
-        .keyword-tag.neutral { background: #F3F4F6; color: var(--text-muted); border: 1px solid var(--border); }
-
-        /* Suggestion list */
+        .keyword-tag { padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 500; font-family: 'DM Mono', monospace; }
+        .keyword-tag.found   { background: var(--success-bg); color: var(--success); border: 1px solid #A7F3D0; }
+        .keyword-tag.missing { background: var(--danger-bg);  color: var(--danger);  border: 1px solid #FECACA; }
         .suggestion-list { display: flex; flex-direction: column; gap: 10px; }
-
-        .suggestion-item {
-            padding: 12px 14px;
-            border-radius: 8px;
-            font-size: 13px;
-            line-height: 1.5;
-            border-left: 3px solid;
-            display: flex;
-            gap: 10px;
-        }
-
-        .suggestion-item.high { background: var(--danger-bg); border-color: var(--danger); color: #7f1d1d; }
+        .suggestion-item { padding: 12px 14px; border-radius: 8px; font-size: 13px; line-height: 1.5; border-left: 3px solid; display: flex; gap: 10px; }
+        .suggestion-item.high   { background: var(--danger-bg);  border-color: var(--danger);  color: #7f1d1d; }
         .suggestion-item.medium { background: var(--warning-bg); border-color: var(--warning); color: #78350f; }
-        .suggestion-item.low { background: var(--success-bg); border-color: var(--success); color: #064e3b; }
-
+        .suggestion-item.low    { background: var(--success-bg); border-color: var(--success); color: #064e3b; }
         .suggestion-icon { flex-shrink: 0; font-size: 16px; }
-
-        /* Section scores */
         .section-score-list { display: flex; flex-direction: column; gap: 10px; }
+        .section-score-item { display: flex; align-items: center; gap: 12px; }
+        .section-score-label { font-size: 13px; font-weight: 500; width: 100px; flex-shrink: 0; }
+        .section-score-bar-wrap { flex: 1; display: flex; align-items: center; gap: 8px; }
+        .section-score-bar { flex: 1; height: 8px; background: #E5E7EB; border-radius: 99px; overflow: hidden; }
+        .section-score-fill { height: 100%; border-radius: 99px; width: 0%; transition: width .8s ease; }
+        .section-score-val { font-size: 12px; font-weight: 600; font-family: 'DM Mono', monospace; color: var(--text-main); width: 34px; text-align: right; }
+        .badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 99px; font-size: 11px; font-weight: 600; }
+        .badge.green  { background: var(--success-bg); color: var(--success); }
+        .badge.red    { background: var(--danger-bg);  color: var(--danger);  }
 
-        .section-score-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .section-score-label {
-            font-size: 13px;
-            font-weight: 500;
-            width: 100px;
-            flex-shrink: 0;
-        }
-
-        .section-score-bar-wrap {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .section-score-bar {
-            flex: 1;
-            height: 8px;
-            background: #E5E7EB;
-            border-radius: 99px;
-            overflow: hidden;
-        }
-
-        .section-score-fill {
-            height: 100%;
-            border-radius: 99px;
-            transition: width 0.8s ease;
-        }
-
-        .section-score-val {
-            font-size: 12px;
-            font-weight: 600;
-            font-family: 'DM Mono', monospace;
-            color: var(--text-main);
-            width: 34px;
-            text-align: right;
-        }
-
-        /* AI Sidebar */
+        /* ── AI Sidebar ── */
         .ai-sidebar {
-            width: 360px;
-            background: var(--panel-bg);
-            border-left: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            z-index: 10;
-            box-shadow: -4px 0 15px rgba(0,0,0,0.03);
+            width: 360px; flex-shrink: 0; background: var(--panel-bg); border-left: 1px solid var(--border);
+            display: flex; flex-direction: column; z-index: 10; box-shadow: -4px 0 15px rgba(0,0,0,.03);
         }
+        .ai-header { padding: 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; font-weight: 600; color: var(--text-main); font-size: 14px; }
+        .ai-header-left { display: flex; align-items: center; gap: 8px; }
+        .ai-key-btn { background: none; border: none; cursor: pointer; opacity: .7; font-size: 14px; padding: 4px; border-radius: 4px; transition: opacity .2s; }
+        .ai-key-btn:hover { opacity: 1; }
 
-        .ai-header {
-            padding: 20px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 600;
-            color: var(--text-main);
-            font-size: 14px;
-        }
+        /* API Banner */
+        .ai-banner { background: #EFF6FF; padding: 14px 16px; border-bottom: 1px solid #DBEAFE; font-size: 12px; }
+        .ai-banner strong { font-size: 13px; color: #1e3a8a; }
+        .ai-banner .sub { font-size: 11px; color: #3b82f6; margin-top: 2px; }
+        .api-input-row { display: flex; gap: 8px; margin-top: 10px; }
+        .api-key-input { flex: 1; padding: 8px 10px; font-size: 12px; border: 1px solid #BFDBFE; border-radius: 6px; font-family: 'DM Mono', monospace; background: white; }
+        .api-key-input:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,.2); }
+        .api-save-btn { background: #2563EB; color: white; border: none; padding: 8px 14px; font-size: 12px; border-radius: 6px; cursor: pointer; font-weight: 600; white-space: nowrap; transition: background .2s; }
+        .api-save-btn:hover { background: #1d4ed8; }
+        .api-status { margin-top: 8px; font-size: 11px; padding: 5px 9px; border-radius: 5px; display: none; font-weight: 500; }
+        .api-status.ok  { background: var(--success-bg); color: var(--success); display: block; }
+        .api-status.err { background: var(--danger-bg);  color: var(--danger);  display: block; }
 
-        .ai-banner {
-            background: #EFF6FF;
-            padding: 12px 15px;
-            border-bottom: 1px solid #DBEAFE;
-            font-size: 12px;
-        }
-
-        .api-input-wrap { display: flex; gap: 8px; margin-top: 8px; }
-
-        .api-key-input {
-            flex: 1;
-            padding: 6px 10px;
-            font-size: 12px;
-            border: 1px solid #BFDBFE;
-            border-radius: 4px;
-            font-family: 'DM Mono', monospace;
-        }
-
-        .api-save-btn {
-            background: #2563EB;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            font-size: 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .ai-actions {
-            padding: 10px 14px;
-            border-bottom: 1px solid var(--border);
-            background: #F8FAFC;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .ai-quick-btn {
-            background: #FFFFFF;
-            border: 1px solid var(--border);
-            color: var(--text-muted);
-            font-size: 11px;
-            padding: 6px 11px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: 0.2s;
-            font-family: 'DM Sans', sans-serif;
-        }
+        /* Quick action pills */
+        .ai-actions { padding: 10px 14px; border-bottom: 1px solid var(--border); background: #F8FAFC; display: flex; flex-wrap: wrap; gap: 6px; }
+        .ai-quick-btn { background: #fff; border: 1px solid var(--border); color: var(--text-muted); font-size: 11px; padding: 6px 11px; border-radius: 20px; cursor: pointer; transition: .2s; font-family: 'DM Sans', sans-serif; }
         .ai-quick-btn:hover { border-color: var(--primary); color: var(--primary); }
 
-        .chat-messages {
-            flex: 1;
-            padding: 18px 14px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            background: #F8FAFC;
-        }
-
+        /* Chat */
+        .chat-messages { flex: 1; padding: 18px 14px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; background: #F8FAFC; }
         .msg { display: flex; gap: 10px; max-width: 92%; }
         .msg.user { align-self: flex-end; flex-direction: row-reverse; }
+        .msg-bubble { padding: 10px 14px; border-radius: 12px; font-size: 13px; line-height: 1.6; word-wrap: break-word; max-width: 100%; }
+        .msg.ai   .msg-bubble { background: #fff; border: 1px solid var(--border); color: var(--text-main); border-top-left-radius: 2px; }
+        .msg.user .msg-bubble { background: var(--primary); color: white; border-top-right-radius: 2px; }
+        .msg-avatar { width: 28px; height: 28px; border-radius: 50%; background: #E0E7FF; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+        .msg.user .msg-avatar { background: var(--primary-hover); color: white; font-size: 12px; font-weight: 700; }
+        .chat-input-area { padding: 14px; background: var(--panel-bg); border-top: 1px solid var(--border); display: flex; gap: 8px; align-items: flex-end; }
+        .chat-input { flex: 1; border: 1px solid var(--border); border-radius: 20px; padding: 10px 14px; font-size: 13px; font-family: 'DM Sans', sans-serif; resize: none; max-height: 100px; }
+        .chat-input:focus { outline: none; border-color: var(--primary); }
+        .send-btn { background: var(--primary); color: white; border: none; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background .2s; }
+        .send-btn:hover { background: var(--primary-hover); }
 
-        .msg-bubble {
-            padding: 10px 14px;
-            border-radius: 12px;
-            font-size: 13px;
-            line-height: 1.6;
-            word-wrap: break-word;
-        }
-
-        .msg.ai .msg-bubble {
-            background: #FFFFFF;
-            border: 1px solid var(--border);
-            color: var(--text-main);
-            border-top-left-radius: 2px;
-        }
-
-        .msg.user .msg-bubble {
-            background: var(--primary);
-            color: white;
-            border-top-right-radius: 2px;
-        }
-
-        .msg-avatar {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: #E0E7FF;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            flex-shrink: 0;
-        }
-        .msg.user .msg-avatar { background: var(--primary-hover); color: white; font-size: 12px; }
-
-        .chat-input-area {
-            padding: 14px;
-            background: var(--panel-bg);
-            border-top: 1px solid var(--border);
-            display: flex;
-            gap: 8px;
-        }
-
-        .chat-input {
-            flex: 1;
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 10px 14px;
-            min-height: 40px;
-            font-size: 13px;
-            font-family: 'DM Sans', sans-serif;
-        }
-
-        .send-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        /* Placeholder/Empty States */
-        .empty-state {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            min-height: 400px;
-            text-align: center;
-            gap: 16px;
-            color: var(--text-muted);
-        }
-
-        .empty-state-icon { font-size: 52px; opacity: 0.6; }
-        .empty-state h3 { font-size: 18px; font-weight: 600; color: var(--text-main); }
-        .empty-state p { font-size: 13px; line-height: 1.6; max-width: 300px; }
-
-        /* Loading Spinner */
-        .spinner {
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255,255,255,0.4);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-        }
+        /* Spinner & Typing */
+        .spinner { width: 18px; height: 18px; border: 2px solid rgba(255,255,255,.4); border-top-color: white; border-radius: 50%; animation: spin .7s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* Typing dots */
-        .typing-dot {
-            display: inline-block; width: 5px; height: 5px;
-            margin: 0 2px; background: #9CA3AF; border-radius: 50%;
-            animation: typing 1.4s infinite ease-in-out both;
-        }
-        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
-        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
-        @keyframes typing { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
-
-        /* Badge pill */
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 2px 8px;
-            border-radius: 99px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-        .badge.green { background: var(--success-bg); color: var(--success); }
-        .badge.yellow { background: var(--warning-bg); color: var(--warning); }
-        .badge.red { background: var(--danger-bg); color: var(--danger); }
-
-        .prose { font-size: 13px; line-height: 1.7; color: #374151; white-space: pre-wrap; }
+        .typing-dot { display: inline-block; width: 5px; height: 5px; margin: 0 2px; background: #9CA3AF; border-radius: 50%; animation: typing 1.4s infinite ease-in-out both; }
+        .typing-dot:nth-child(1) { animation-delay: -.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -.16s; }
+        @keyframes typing { 0%,80%,100% { transform: scale(0); } 40% { transform: scale(1); } }
 
         /* Scrollbars */
         ::-webkit-scrollbar { width: 5px; }
@@ -555,111 +208,74 @@
 </head>
 <body>
 
-<!-- LEFT SIDEBAR -->
+<!-- ═══════════════════ LEFT SIDEBAR ═══════════════════ -->
 <div class="sidebar">
     <div class="header">
         <h1>🎯 ATS Analyzer Pro</h1>
-        <p>Paste your resume & job description to analyze ATS compatibility.</p>
+        <p>Powered by Groq · Paste your resume &amp; job description to analyze ATS compatibility.</p>
     </div>
 
+    <!-- Resume upload -->
     <div class="form-group">
         <label>Resume</label>
 
-        <!-- Upload Drop Zone -->
-        <div id="uploadZone"
+        <div class="upload-zone" id="uploadZone"
              onclick="document.getElementById('fileInput').click()"
              ondragover="handleDragOver(event)"
              ondragleave="handleDragLeave(event)"
-             ondrop="handleDrop(event)"
-             style="
-                border: 2px dashed var(--border);
-                border-radius: 10px;
-                padding: 22px 16px;
-                text-align: center;
-                cursor: pointer;
-                background: #F9FAFB;
-                transition: all 0.2s;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 8px;
-             ">
+             ondrop="handleDrop(event)">
             <div style="font-size:28px;">📄</div>
             <div style="font-size:13px;font-weight:600;color:var(--text-main);">Drop your resume here</div>
             <div style="font-size:11px;color:var(--text-muted);">PDF, DOC, DOCX, or TXT</div>
-            <button type="button" style="
-                margin-top: 4px;
-                background: var(--primary);
-                color: white;
-                border: none;
-                padding: 7px 16px;
-                border-radius: 6px;
-                font-size: 12px;
-                font-weight: 600;
-                cursor: pointer;
-                font-family: 'DM Sans', sans-serif;
-            ">Browse File</button>
+            <div class="upload-zone-btn">Browse File</div>
             <input type="file" id="fileInput" accept=".pdf,.doc,.docx,.txt" style="display:none" onchange="handleFileSelect(event)">
         </div>
 
-        <!-- File selected status -->
-        <div id="fileStatus" style="display:none; align-items:center; justify-content:space-between; background:var(--success-bg); border:1px solid #A7F3D0; border-radius:8px; padding:8px 12px;">
-            <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--success);font-weight:500;">
-                <span>✅</span>
-                <span id="fileName" style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
-            </div>
-            <button onclick="clearFile()" style="background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:14px;padding:0 2px;" title="Remove file">✕</button>
+        <div class="file-status" id="fileStatus">
+            <div class="file-status-name"><span>✅</span><span id="fileName"></span></div>
+            <button class="file-clear-btn" onclick="clearFile()" title="Remove file">✕</button>
         </div>
 
-        <!-- Toggle to paste manually -->
-        <div style="display:flex;align-items:center;gap:8px;margin-top:2px;">
-            <div style="flex:1;height:1px;background:var(--border);"></div>
-            <span style="font-size:11px;color:var(--text-muted);">or</span>
-            <div style="flex:1;height:1px;background:var(--border);"></div>
+        <div class="or-divider">
+            <div></div><span>or</span><div></div>
         </div>
-        <button type="button" id="pasteToggleBtn" onclick="togglePasteArea()" style="
-            background: white;
-            border: 1px solid var(--border);
-            color: var(--text-muted);
-            font-size: 12px;
-            font-weight: 500;
-            padding: 7px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-family: 'DM Sans', sans-serif;
-            transition: 0.2s;
-        ">✏️ Paste resume text manually</button>
-
-        <div id="pasteArea" style="display:none; flex-direction:column; gap:4px;">
-            <textarea id="inpResume" placeholder="Paste your full resume text here..." rows="7" oninput="updateCharCount('inpResume','resumeCount')"></textarea>
+        <button class="paste-toggle-btn" id="pasteToggleBtn" onclick="togglePasteArea()">✏️ Paste resume text manually</button>
+        <div class="paste-area" id="pasteArea">
+            <textarea id="inpResume" placeholder="Paste your full resume text here..." rows="7"
+                      oninput="updateCharCount('inpResume','resumeCount')"></textarea>
             <div class="char-counter" id="resumeCount">0 characters</div>
         </div>
     </div>
 
+    <!-- Job Description -->
     <div class="form-group">
         <label>Job Description</label>
-        <textarea id="inpJobDesc" placeholder="Paste the job description you're applying to..." rows="7" oninput="updateCharCount('inpJobDesc','jobCount')"></textarea>
+        <textarea id="inpJobDesc" placeholder="Paste the job description you're applying to..." rows="7"
+                  oninput="updateCharCount('inpJobDesc','jobCount')"></textarea>
         <div class="char-counter" id="jobCount">0 characters</div>
     </div>
 
+    <!-- Job title -->
     <div class="form-group">
         <label>Target Job Title <span style="color:var(--text-muted);font-weight:400;text-transform:none;">(optional)</span></label>
         <input type="text" id="inpJobTitle" placeholder="e.g. Senior Frontend Engineer">
     </div>
 
     <button class="btn" id="analyzeBtn" onclick="runAnalysis()">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
         Analyze ATS Score
     </button>
 
     <div class="divider"></div>
 
     <div class="tip-box">
-        💡 <strong>How it works:</strong> AI reads your resume against the job description and scores keyword match, format quality, section completeness, and impact language — just like a real ATS system.
+        💡 <strong>How it works:</strong> Groq AI reads your resume against the job description and scores keyword match, format quality, section completeness, and impact language — just like a real ATS system.
     </div>
 </div>
 
-<!-- MAIN AREA -->
+<!-- ═══════════════════ MAIN AREA ═══════════════════ -->
 <div class="main" id="mainArea">
     <div class="empty-state" id="emptyState">
         <div class="empty-state-icon">📋</div>
@@ -667,17 +283,15 @@
         <p>Paste your resume and a job description on the left, then click <strong>Analyze ATS Score</strong> to get a detailed compatibility report.</p>
     </div>
 
-    <!-- Results (hidden initially) -->
-    <div id="resultsArea" style="display:none; display:flex; flex-direction:column; gap:18px;">
-
+    <div id="resultsArea" style="display:none; flex-direction:column; gap:18px;">
         <!-- Score Card -->
-        <div class="score-card" id="scoreCard">
+        <div class="score-card">
             <div class="score-ring-wrap">
                 <svg width="120" height="120" viewBox="0 0 120 120">
                     <circle cx="60" cy="60" r="50" fill="none" stroke="#E5E7EB" stroke-width="10"/>
                     <circle id="scoreCircle" cx="60" cy="60" r="50" fill="none" stroke="#059669" stroke-width="10"
                         stroke-dasharray="314" stroke-dashoffset="314" stroke-linecap="round"
-                        style="transition: stroke-dashoffset 1s cubic-bezier(0.4,0,0.2,1), stroke 0.5s ease"/>
+                        style="transition: stroke-dashoffset 1s cubic-bezier(.4,0,.2,1), stroke .5s ease"/>
                 </svg>
                 <div class="score-number">
                     <span id="scoreDisplay">—</span>
@@ -685,266 +299,364 @@
                 </div>
             </div>
             <div class="score-meta">
-                <h2 id="scoreLabel">Analyzing...</h2>
-                <p id="scoreDesc">Processing your resume against the job description.</p>
+                <h2 id="scoreLabel">—</h2>
+                <p id="scoreDesc">Run an analysis to see your results.</p>
                 <div class="score-breakdown" id="scoreBreakdown"></div>
             </div>
         </div>
 
-        <!-- Grid -->
-        <div class="analysis-grid" id="analysisGrid">
-            <!-- Filled by JS -->
-        </div>
+        <!-- Analysis Cards -->
+        <div class="analysis-grid" id="analysisGrid"></div>
     </div>
 </div>
 
-<!-- RIGHT SIDEBAR: AI Chat -->
+<!-- ═══════════════════ RIGHT AI SIDEBAR ═══════════════════ -->
 <div class="ai-sidebar">
     <div class="ai-header">
-        <span>✨</span> AI Resume Coach
+        <div class="ai-header-left">
+            <span>⚡</span> AI Resume Coach
+            <span style="font-size:10px;background:#EEF2FF;color:var(--primary);padding:2px 7px;border-radius:99px;font-weight:600;">Groq</span>
+        </div>
+        <button class="ai-key-btn" onclick="toggleApiBanner()" title="Edit API Key">🔑</button>
     </div>
 
     <div class="ai-banner" id="apiBanner">
-        <strong style="font-size:12px;">Connect AI (Anthropic API Key)</strong>
-        <div class="api-input-wrap">
-            <input type="password" id="apiKeyInput" class="api-key-input" placeholder="sk-ant-...">
+        <strong>Connect Groq API Key</strong>
+        <div class="sub">Your key is stored only in your browser (localStorage).</div>
+        <div class="api-input-row">
+            <input type="password" id="apiKeyInput" class="api-key-input" placeholder="gsk_...">
             <button class="api-save-btn" onclick="saveApiKey()">Save</button>
         </div>
+        <div id="apiStatus" class="api-status"></div>
     </div>
 
     <div class="ai-actions">
         <button class="ai-quick-btn" onclick="quickAction('How can I improve my ATS score for this job?')">Improve Score</button>
         <button class="ai-quick-btn" onclick="quickAction('What keywords am I missing for this role?')">Missing Keywords</button>
-        <button class="ai-quick-btn" onclick="quickAction('Rewrite my resume summary to better match the job description.')">Rewrite Summary</button>
+        <button class="ai-quick-btn" onclick="quickAction('Rewrite my resume summary to better match this job description.')">Rewrite Summary</button>
         <button class="ai-quick-btn" onclick="quickAction('Give me 5 strong action verbs I should use in my bullet points.')">Action Verbs</button>
         <button class="ai-quick-btn" onclick="quickAction('Is my resume format ATS-friendly? What should I change?')">Format Check</button>
     </div>
 
     <div class="chat-messages" id="chatMessages">
         <div class="msg ai">
-            <div class="msg-avatar">✨</div>
-            <div class="msg-bubble">Hi! I'm your AI Resume Coach. Save your Anthropic API key above and run an ATS analysis — then ask me anything to boost your score.</div>
+            <div class="msg-avatar">⚡</div>
+            <div class="msg-bubble">Hi! I'm your AI Resume Coach powered by Groq. Save your <strong>gsk_...</strong> API key above, run an analysis, then ask me anything to boost your score.</div>
         </div>
     </div>
 
     <div class="chat-input-area">
-        <textarea id="chatInput" class="chat-input" placeholder="Ask AI..." rows="1" onkeydown="handleChatKey(event)"></textarea>
+        <textarea id="chatInput" class="chat-input" placeholder="Ask AI..." rows="1"
+                  onkeydown="handleChatKey(event)" oninput="autoResize(this)"></textarea>
         <button class="send-btn" onclick="sendChatMessage()">
-            <svg width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            <svg width="15" height="15" fill="white" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
         </button>
     </div>
 </div>
 
 <script>
-    // ── File Upload ────────────────────────────────────────────────
-    let uploadedResumeText = "";
+// ════════════════════════════════════════════════
+//  CONSTANTS
+// ════════════════════════════════════════════════
+const GROQ_API   = "https://api.groq.com/openai/v1/chat/completions";
+// Best available Groq model (fast + high quality)
+const GROQ_MODEL = "llama-3.3-70b-versatile";
+const LS_KEY     = "ats_groq_api_key";
 
-    function handleDragOver(e) {
-        e.preventDefault();
-        const zone = document.getElementById("uploadZone");
-        zone.style.borderColor = "var(--primary)";
-        zone.style.background = "var(--primary-light)";
+// ════════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════════
+let API_KEY            = localStorage.getItem(LS_KEY) || "";
+let uploadedResumeText = "";
+let chatHistory        = [];
+let lastAnalysis       = null;
+let isChatBusy         = false;
+
+// Restore saved key
+if (API_KEY) {
+    document.getElementById("apiBanner").style.display = "none";
+    document.getElementById("apiKeyInput").value = API_KEY;
+}
+
+// ════════════════════════════════════════════════
+//  HELPERS
+// ════════════════════════════════════════════════
+function updateCharCount(inputId, countId) {
+    const len = document.getElementById(inputId).value.length;
+    document.getElementById(countId).textContent = len.toLocaleString() + " characters";
+}
+
+function escapeHtml(t = "") {
+    return String(t)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+}
+
+function formatAIMsg(text = "") {
+    return escapeHtml(text)
+        .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+        .replace(/\*(.*?)\*/g,     "<em>$1</em>")
+        .replace(/`(.*?)`/g,       "<code style='background:#F3F4F6;padding:1px 4px;border-radius:3px;font-family:monospace;'>$1</code>")
+        .replace(/\n/g, "<br>");
+}
+
+function scoreColor(v) {
+    if (v >= 75) return "var(--score-high)";
+    if (v >= 50) return "var(--score-mid)";
+    return "var(--score-low)";
+}
+
+function scoreLabelText(v) {
+    if (v >= 85) return "Excellent Match";
+    if (v >= 70) return "Good Match";
+    if (v >= 55) return "Fair Match";
+    if (v >= 40) return "Needs Work";
+    return "Poor Match";
+}
+
+function scoreDescText(v) {
+    if (v >= 85) return "Your resume is highly optimized for this role. Great job!";
+    if (v >= 70) return "Your resume is a solid match. A few tweaks can push it higher.";
+    if (v >= 55) return "Moderate match detected. Focus on adding missing keywords.";
+    if (v >= 40) return "Several improvements needed to pass ATS screening.";
+    return "Major gaps found. Significant revisions recommended before applying.";
+}
+
+function safeNum(v, fallback = 0) {
+    const n = parseInt(v, 10);
+    return isNaN(n) ? fallback : Math.min(100, Math.max(0, n));
+}
+
+function safeArr(v) {
+    return Array.isArray(v) ? v : [];
+}
+
+function autoResize(el) {
+    el.style.height = "auto";
+    el.style.height = Math.min(el.scrollHeight, 100) + "px";
+}
+
+// ════════════════════════════════════════════════
+//  FILE UPLOAD
+// ════════════════════════════════════════════════
+function handleDragOver(e) {
+    e.preventDefault();
+    document.getElementById("uploadZone").classList.add("drag-over");
+}
+function handleDragLeave() {
+    document.getElementById("uploadZone").classList.remove("drag-over");
+}
+function handleDrop(e) {
+    e.preventDefault();
+    handleDragLeave();
+    const file = e.dataTransfer.files[0];
+    if (file) processFile(file);
+}
+function handleFileSelect(e) {
+    const file = e.target.files[0];
+    if (file) processFile(file);
+}
+
+function processFile(file) {
+    const ext = file.name.split(".").pop().toLowerCase();
+    if (!["pdf","doc","docx","txt"].includes(ext)) {
+        alert("Please upload a PDF, DOC, DOCX, or TXT file.");
+        return;
+    }
+    const reader = new FileReader();
+
+    if (ext === "txt") {
+        reader.onload = e => { uploadedResumeText = e.target.result.trim(); showFileSelected(file.name); };
+        reader.readAsText(file);
+    } else if (ext === "pdf") {
+        reader.onload = e => {
+            try {
+                const bytes = new Uint8Array(e.target.result);
+                let raw = "";
+                for (let i = 0; i < bytes.length; i++) {
+                    const b = bytes[i];
+                    raw += (b >= 32 && b < 127) ? String.fromCharCode(b) : " ";
+                }
+                const words = raw.match(/[A-Za-z][A-Za-z0-9\s,.\-@:()\\/+#]{3,}/g) || [];
+                uploadedResumeText = words.join(" ").replace(/\s+/g, " ").trim();
+                if (!uploadedResumeText) uploadedResumeText = `[PDF: ${file.name} — text extraction limited. Paste text manually for best results.]`;
+            } catch {
+                uploadedResumeText = `[PDF: ${file.name} — paste text manually for best results]`;
+            }
+            showFileSelected(file.name);
+        };
+        reader.readAsArrayBuffer(file);
+    } else {
+        // doc / docx — read as text (limited extraction)
+        reader.onload = e => {
+            const text = e.target.result.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+            uploadedResumeText = text.length > 50
+                ? text
+                : `[${file.name} — paste text manually for best results]`;
+            showFileSelected(file.name);
+        };
+        reader.readAsText(file);
+    }
+}
+
+function showFileSelected(name) {
+    document.getElementById("uploadZone").style.display  = "none";
+    document.getElementById("fileStatus").style.display  = "flex";
+    document.getElementById("fileName").textContent      = name;
+    document.getElementById("pasteArea").style.display   = "none";
+    document.getElementById("pasteToggleBtn").textContent = "✏️ Paste resume text manually";
+}
+
+function clearFile() {
+    uploadedResumeText = "";
+    document.getElementById("fileInput").value           = "";
+    document.getElementById("fileStatus").style.display  = "none";
+    document.getElementById("uploadZone").style.display  = "flex";
+}
+
+function togglePasteArea() {
+    const area = document.getElementById("pasteArea");
+    const btn  = document.getElementById("pasteToggleBtn");
+    const open = area.style.display === "flex";
+    area.style.display    = open ? "none" : "flex";
+    area.style.flexDirection = "column";
+    btn.textContent = open ? "✏️ Paste resume text manually" : "✕ Hide paste area";
+}
+
+function getResumeText() {
+    if (uploadedResumeText) return uploadedResumeText;
+    return (document.getElementById("inpResume")?.value || "").trim();
+}
+
+// ════════════════════════════════════════════════
+//  API KEY
+// ════════════════════════════════════════════════
+function toggleApiBanner() {
+    const banner = document.getElementById("apiBanner");
+    banner.style.display = banner.style.display === "none" ? "block" : "none";
+}
+
+function saveApiKey() {
+    const k = document.getElementById("apiKeyInput").value.trim();
+    const statusEl = document.getElementById("apiStatus");
+
+    if (!k.startsWith("gsk_")) {
+        statusEl.className = "api-status err";
+        statusEl.textContent = "⚠️ Groq keys start with gsk_ — please check your key.";
+        return;
     }
 
-    function handleDragLeave() {
-        const zone = document.getElementById("uploadZone");
-        zone.style.borderColor = "var(--border)";
-        zone.style.background = "#F9FAFB";
+    statusEl.className = "api-status ok";
+    statusEl.textContent = "⏳ Verifying key…";
+
+    // Quick test call
+    groqCall(k, [{ role: "user", content: "Reply with just: OK" }], null, 5)
+        .then(result => {
+            if (result.error) {
+                statusEl.className = "api-status err";
+                statusEl.textContent = `❌ ${result.error.message || "Invalid key"}`;
+            } else {
+                API_KEY = k;
+                localStorage.setItem(LS_KEY, k);
+                statusEl.className = "api-status ok";
+                statusEl.textContent = "✅ Key verified & connected!";
+                setTimeout(() => {
+                    document.getElementById("apiBanner").style.display = "none";
+                }, 1400);
+                appendMsg("ai", "✅ Groq API connected! Run an analysis, then ask me anything to boost your resume.");
+            }
+        })
+        .catch(() => {
+            statusEl.className = "api-status err";
+            statusEl.textContent = "❌ Network error — check your connection.";
+        });
+}
+
+// ════════════════════════════════════════════════
+//  GROQ API CALL (OpenAI-compatible endpoint)
+// ════════════════════════════════════════════════
+async function groqCall(key, messages, systemPrompt, maxTokens = 1024) {
+    const msgs = systemPrompt
+        ? [{ role: "system", content: systemPrompt }, ...messages]
+        : messages;
+
+    const res = await fetch(GROQ_API, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${key}`
+        },
+        body: JSON.stringify({
+            model:      GROQ_MODEL,
+            max_tokens: maxTokens,
+            messages:   msgs,
+            temperature: 0.2  // lower = more deterministic JSON output
+        })
+    });
+
+    // Parse regardless of HTTP status so we surface the error message
+    const data = await res.json();
+    return data;
+}
+
+// Extract text content from Groq response
+function groqText(data) {
+    return (data?.choices?.[0]?.message?.content || "").trim();
+}
+
+// ════════════════════════════════════════════════
+//  SCORE ANIMATIONS
+// ════════════════════════════════════════════════
+function animateScore(target) {
+    const circumference = 314;
+    const offset = circumference - (target / 100) * circumference;
+    const circle  = document.getElementById("scoreCircle");
+    const display = document.getElementById("scoreDisplay");
+
+    circle.style.stroke = scoreColor(target);
+    setTimeout(() => { circle.style.strokeDashoffset = offset; }, 100);
+
+    let cur = 0;
+    const step = target / 50;
+    const timer = setInterval(() => {
+        cur = Math.min(cur + step, target);
+        display.textContent = Math.round(cur);
+        if (cur >= target) clearInterval(timer);
+    }, 20);
+}
+
+// ════════════════════════════════════════════════
+//  ATS ANALYSIS
+// ════════════════════════════════════════════════
+async function runAnalysis() {
+    const resume = getResumeText();
+    const job    = (document.getElementById("inpJobDesc").value || "").trim();
+
+    if (!resume) { alert("Please upload or paste your resume text."); return; }
+    if (!job)    { alert("Please paste the job description."); return; }
+    if (!API_KEY) {
+        alert("Please save your Groq API key (gsk_...) in the right sidebar first.");
+        document.getElementById("apiBanner").style.display = "block";
+        return;
     }
 
-    function handleDrop(e) {
-        e.preventDefault();
-        handleDragLeave();
-        const file = e.dataTransfer.files[0];
-        if (file) processFile(file);
-    }
+    const btn = document.getElementById("analyzeBtn");
+    btn.disabled = true;
+    btn.innerHTML = `<div class="spinner"></div> Analyzing…`;
 
-    function handleFileSelect(e) {
-        const file = e.target.files[0];
-        if (file) processFile(file);
-    }
+    // Show results skeleton
+    document.getElementById("emptyState").style.display = "none";
+    const resultsArea = document.getElementById("resultsArea");
+    resultsArea.style.display       = "flex";
+    resultsArea.style.flexDirection = "column";
+    resultsArea.style.gap           = "18px";
+    resultsArea.style.opacity       = "0.4";
+    resultsArea.style.pointerEvents = "none";
 
-    function processFile(file) {
-        const ext = file.name.split(".").pop().toLowerCase();
-        if (!["pdf","doc","docx","txt"].includes(ext)) {
-            alert("Please upload a PDF, DOC, DOCX, or TXT file.");
-            return;
-        }
-        const reader = new FileReader();
-        if (ext === "txt") {
-            reader.onload = e => { uploadedResumeText = e.target.result; showFileSelected(file.name); };
-            reader.readAsText(file);
-        } else if (ext === "pdf") {
-            reader.onload = async e => {
-                try {
-                    const bytes = new Uint8Array(e.target.result);
-                    let raw = "";
-                    for (let i = 0; i < bytes.length; i++) {
-                        if (bytes[i] >= 32 && bytes[i] < 127) raw += String.fromCharCode(bytes[i]);
-                        else raw += " ";
-                    }
-                    const words = raw.match(/[A-Za-z][A-Za-z0-9\s,.\-@:()\/+#]{3,}/g) || [];
-                    uploadedResumeText = words.join(" ").replace(/\s+/g," ").trim();
-                } catch { uploadedResumeText = `[PDF: ${file.name} — if results seem off, paste text manually]`; }
-                showFileSelected(file.name);
-            };
-            reader.readAsArrayBuffer(file);
-        } else {
-            reader.onload = e => {
-                const text = e.target.result.replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim();
-                uploadedResumeText = text.length > 50 ? text : `[${file.name} — paste text manually for best results]`;
-                showFileSelected(file.name);
-            };
-            reader.readAsText(file);
-        }
-    }
-
-    function showFileSelected(name) {
-        document.getElementById("uploadZone").style.display = "none";
-        const s = document.getElementById("fileStatus");
-        s.style.display = "flex";
-        document.getElementById("fileName").textContent = name;
-        document.getElementById("pasteArea").style.display = "none";
-        document.getElementById("pasteToggleBtn").textContent = "✏️ Paste resume text manually";
-    }
-
-    function clearFile() {
-        uploadedResumeText = "";
-        document.getElementById("fileInput").value = "";
-        document.getElementById("fileStatus").style.display = "none";
-        document.getElementById("uploadZone").style.display = "flex";
-    }
-
-    function togglePasteArea() {
-        const area = document.getElementById("pasteArea");
-        const btn = document.getElementById("pasteToggleBtn");
-        const open = area.style.display === "flex";
-        area.style.display = open ? "none" : "flex";
-        area.style.flexDirection = "column";
-        btn.textContent = open ? "✏️ Paste resume text manually" : "✕ Hide paste area";
-    }
-
-    function getResumeText() {
-        if (uploadedResumeText) return uploadedResumeText;
-        return document.getElementById("inpResume")?.value?.trim() || "";
-    }
-
-    // ── State ──────────────────────────────────────────────────────
-    let API_KEY = localStorage.getItem("ats_anthropic_key") || "";
-    let chatHistory = [];
-    let lastAnalysis = null;
-
-    if (API_KEY) document.getElementById("apiBanner").style.display = "none";
-
-    // ── Helpers ────────────────────────────────────────────────────
-    function updateCharCount(inputId, countId) {
-        const len = document.getElementById(inputId).value.length;
-        document.getElementById(countId).textContent = len.toLocaleString() + " characters";
-    }
-
-    function escapeHtml(t) {
-        return t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-    }
-
-    function formatAIMsg(text) {
-        return escapeHtml(text)
-            .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-            .replace(/\*(.*?)\*/g, "<em>$1</em>")
-            .replace(/\n/g, "<br>");
-    }
-
-    function scoreColor(v) {
-        if (v >= 75) return "var(--score-high)";
-        if (v >= 50) return "var(--score-mid)";
-        return "var(--score-low)";
-    }
-
-    function scoreLabel(v) {
-        if (v >= 85) return "Excellent Match";
-        if (v >= 70) return "Good Match";
-        if (v >= 55) return "Fair Match";
-        if (v >= 40) return "Needs Work";
-        return "Poor Match";
-    }
-
-    function scoreDesc(v) {
-        if (v >= 85) return "Your resume is highly optimized for this role. Great job!";
-        if (v >= 70) return "Your resume is a solid match. A few tweaks can push it higher.";
-        if (v >= 55) return "Moderate match detected. Focus on adding missing keywords.";
-        if (v >= 40) return "Several improvements needed to pass ATS screening.";
-        return "Major gaps found. Significant revisions recommended before applying.";
-    }
-
-    function animateScore(target) {
-        const circumference = 314;
-        const offset = circumference - (target / 100) * circumference;
-        const circle = document.getElementById("scoreCircle");
-        const display = document.getElementById("scoreDisplay");
-        circle.style.stroke = scoreColor(target);
-        setTimeout(() => { circle.style.strokeDashoffset = offset; }, 100);
-
-        let cur = 0;
-        const step = target / 50;
-        const timer = setInterval(() => {
-            cur = Math.min(cur + step, target);
-            display.textContent = Math.round(cur);
-            if (cur >= target) clearInterval(timer);
-        }, 20);
-    }
-
-    // ── API Key ────────────────────────────────────────────────────
-    function saveApiKey() {
-        const k = document.getElementById("apiKeyInput").value.trim();
-        if (!k.startsWith("sk-ant-")) {
-            alert("Please enter a valid Anthropic API key starting with 'sk-ant-'");
-            return;
-        }
-        API_KEY = k;
-        localStorage.setItem("ats_anthropic_key", k);
-        document.getElementById("apiBanner").style.display = "none";
-        appendMsg("ai", "✅ API key connected! Run an analysis first, then ask me anything to boost your resume.");
-    }
-
-    // ── Context ────────────────────────────────────────────────────
-    function getContext() {
-        return `
-Resume:
-${getResumeText() || "(not provided)"}
-
-Job Description:
-${document.getElementById("inpJobDesc").value || "(not provided)"}
-
-Target Role: ${document.getElementById("inpJobTitle").value || "(not specified)"}
-
-Last ATS Analysis Result:
-${lastAnalysis ? JSON.stringify(lastAnalysis, null, 2) : "(not run yet)"}
-        `.trim();
-    }
-
-    // ── ATS Analysis ───────────────────────────────────────────────
-    async function runAnalysis() {
-        const resume = getResumeText();
-        const job = document.getElementById("inpJobDesc").value.trim();
-
-        if (!resume) { alert("Please paste your resume text."); return; }
-        if (!job)    { alert("Please paste the job description."); return; }
-        if (!API_KEY) {
-            alert("Please save your Anthropic API key in the right sidebar first.");
-            return;
-        }
-
-        const btn = document.getElementById("analyzeBtn");
-        btn.disabled = true;
-        btn.innerHTML = `<div class="spinner"></div> Analyzing...`;
-
-        document.getElementById("emptyState").style.display = "none";
-        const results = document.getElementById("resultsArea");
-        results.style.display = "flex";
-        results.style.flexDirection = "column";
-        results.style.gap = "18px";
-        results.style.opacity = "0.4";
-
-        const prompt = `You are an expert ATS (Applicant Tracking System) analyzer. Analyze the following resume against the job description and return a JSON object ONLY — no markdown, no preamble.
+    const prompt = `You are an expert ATS (Applicant Tracking System) analyzer. Analyze the resume against the job description below.
+Return ONLY a valid JSON object — no markdown fences, no explanation, no extra text before or after.
 
 Resume:
 ${resume}
@@ -952,265 +664,336 @@ ${resume}
 Job Description:
 ${job}
 
-Return this exact JSON structure:
+Required JSON structure (all fields mandatory):
 {
-  "overall_score": <0-100>,
-  "keyword_score": <0-100>,
-  "format_score": <0-100>,
-  "impact_score": <0-100>,
-  "completeness_score": <0-100>,
-  "keywords_found": ["keyword1", "keyword2", ...],
-  "keywords_missing": ["keyword1", "keyword2", ...],
-  "suggestions": [
-    {"priority": "high"|"medium"|"low", "text": "actionable suggestion"},
-    ...
-  ],
-  "section_scores": {
-    "Summary": <0-100>,
-    "Experience": <0-100>,
-    "Skills": <0-100>,
-    "Education": <0-100>,
-    "Projects": <0-100>
-  },
-  "strengths": ["strength1", "strength2", ...],
-  "format_issues": ["issue1", "issue2", ...]
+  "overall_score": <integer 0-100>,
+  "keyword_score": <integer 0-100>,
+  "format_score": <integer 0-100>,
+  "impact_score": <integer 0-100>,
+  "completeness_score": <integer 0-100>,
+  "keywords_found": ["string"],
+  "keywords_missing": ["string"],
+  "suggestions": [{"priority": "high"|"medium"|"low", "text": "string"}],
+  "section_scores": {"Summary": 0, "Experience": 0, "Skills": 0, "Education": 0, "Projects": 0},
+  "strengths": ["string"],
+  "format_issues": ["string"]
 }`;
 
-        try {
-            const res = await fetch("https://api.anthropic.com/v1/messages", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    model: "claude-sonnet-4-6",
-                    max_tokens: 1500,
-                    messages: [{ role: "user", content: prompt }]
-                })
-            });
+    try {
+        const data = await groqCall(API_KEY, [{ role: "user", content: prompt }], null, 2048);
 
-            const data = await res.json();
-
-            if (data.error) {
-                alert("API Error: " + data.error.message);
-                btn.disabled = false;
-                btn.innerHTML = `<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg> Analyze ATS Score`;
-                return;
-            }
-
-            const rawText = data.content.filter(b => b.type === "text").map(b => b.text).join("");
-            const cleaned = rawText.replace(/```json|```/g, "").trim();
-            const analysis = JSON.parse(cleaned);
-            lastAnalysis = analysis;
-
-            renderResults(analysis);
-            results.style.opacity = "1";
-            appendMsg("ai", `✅ Analysis complete! Your ATS score is **${analysis.overall_score}/100** (${scoreLabel(analysis.overall_score)}). Ask me anything to improve it.`);
-
-        } catch (err) {
-            alert("Error: " + err.message);
+        if (data.error) {
+            handleGroqError(data.error);
+            resetBtn(btn);
+            resultsArea.style.opacity = "1";
+            resultsArea.style.pointerEvents = "auto";
+            return;
         }
 
-        btn.disabled = false;
-        btn.innerHTML = `<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg> Re-Analyze`;
+        const rawText = groqText(data);
+
+        // Strip any accidental markdown fences
+        const cleaned = rawText
+            .replace(/^```(?:json)?\s*/im, "")
+            .replace(/\s*```\s*$/im, "")
+            .trim();
+
+        let analysis;
+        try {
+            analysis = JSON.parse(cleaned);
+        } catch (parseErr) {
+            console.error("JSON parse failed:", parseErr, "\nRaw:", rawText);
+            appendMsg("ai", "⚠️ The AI returned an unexpected format. Please try running the analysis again.");
+            resetBtn(btn);
+            resultsArea.style.opacity = "1";
+            resultsArea.style.pointerEvents = "auto";
+            return;
+        }
+
+        lastAnalysis = analysis;
+        renderResults(analysis);
+
+        resultsArea.style.opacity = "1";
+        resultsArea.style.pointerEvents = "auto";
+
+        appendMsg("ai", `✅ Analysis complete! Your ATS score is **${safeNum(analysis.overall_score)}/100** (${scoreLabelText(safeNum(analysis.overall_score))}). Ask me anything to improve it.`);
+
+    } catch (err) {
+        console.error("Fetch error:", err);
+        appendMsg("ai", `❌ Network error: ${err.message}. Check your connection and try again.`);
+        resultsArea.style.opacity = "1";
+        resultsArea.style.pointerEvents = "auto";
     }
 
-    function renderResults(a) {
-        // Score ring
-        animateScore(a.overall_score);
-        document.getElementById("scoreLabel").textContent = scoreLabel(a.overall_score);
-        document.getElementById("scoreDesc").textContent = scoreDesc(a.overall_score);
+    resetBtn(btn);
+}
 
-        // Breakdown bars
-        const breakdown = [
-            { label: "Keywords", val: a.keyword_score },
-            { label: "Format",   val: a.format_score },
-            { label: "Impact",   val: a.impact_score },
-            { label: "Complete", val: a.completeness_score },
-        ];
-        document.getElementById("scoreBreakdown").innerHTML = breakdown.map(b => `
-            <div class="score-item">
-                <div class="score-item-label">${b.label}</div>
-                <div class="score-item-bar-wrap">
-                    <div class="score-item-bar">
-                        <div class="score-item-fill" style="width:0%;background:${scoreColor(b.val)}" data-target="${b.val}"></div>
-                    </div>
-                    <div class="score-item-val">${b.val}</div>
+function handleGroqError(error) {
+    const msg  = error.message || "Unknown error";
+    const code = error.code    || error.type || "";
+    const statusEl = document.getElementById("apiStatus");
+
+    document.getElementById("apiBanner").style.display = "block";
+    statusEl.className = "api-status err";
+
+    if (code === "invalid_api_key" || msg.toLowerCase().includes("api key") || msg.toLowerCase().includes("auth")) {
+        statusEl.textContent = `❌ Invalid API key. Please re-enter your gsk_... key.`;
+        API_KEY = "";
+        localStorage.removeItem(LS_KEY);
+    } else if (code === "rate_limit_exceeded" || msg.toLowerCase().includes("rate limit")) {
+        statusEl.textContent = `⚠️ Rate limit hit — wait a moment and try again.`;
+    } else if (msg.toLowerCase().includes("model")) {
+        statusEl.textContent = `⚠️ Model error: ${msg}`;
+    } else {
+        statusEl.textContent = `❌ API error: ${msg}`;
+    }
+}
+
+function resetBtn(btn) {
+    btn.disabled = false;
+    btn.innerHTML = `<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg> Re-Analyze`;
+}
+
+// ════════════════════════════════════════════════
+//  RENDER RESULTS
+// ════════════════════════════════════════════════
+function renderResults(a) {
+    const overall = safeNum(a.overall_score);
+    animateScore(overall);
+    document.getElementById("scoreLabel").textContent = scoreLabelText(overall);
+    document.getElementById("scoreDesc").textContent  = scoreDescText(overall);
+
+    // Breakdown bars
+    const breakdown = [
+        { label: "Keywords", val: safeNum(a.keyword_score) },
+        { label: "Format",   val: safeNum(a.format_score) },
+        { label: "Impact",   val: safeNum(a.impact_score) },
+        { label: "Complete", val: safeNum(a.completeness_score) },
+    ];
+    document.getElementById("scoreBreakdown").innerHTML = breakdown.map(b => `
+        <div class="score-item">
+            <div class="score-item-label">${b.label}</div>
+            <div class="score-item-bar-wrap">
+                <div class="score-item-bar">
+                    <div class="score-item-fill" style="background:${scoreColor(b.val)}" data-target="${b.val}"></div>
                 </div>
-            </div>`).join("");
+                <div class="score-item-val">${b.val}</div>
+            </div>
+        </div>`).join("");
 
-        setTimeout(() => {
-            document.querySelectorAll(".score-item-fill").forEach(el => {
-                el.style.width = el.dataset.target + "%";
-            });
-        }, 200);
+    setTimeout(() => {
+        document.querySelectorAll(".score-item-fill").forEach(el => {
+            el.style.width = el.dataset.target + "%";
+        });
+    }, 200);
 
-        // Grid cards
-        const grid = document.getElementById("analysisGrid");
-        grid.innerHTML = "";
+    // Grid cards
+    const grid = document.getElementById("analysisGrid");
+    grid.innerHTML = "";
 
-        // Keywords found
-        grid.innerHTML += `
+    const found   = safeArr(a.keywords_found);
+    const missing = safeArr(a.keywords_missing);
+
+    // Keywords found
+    grid.innerHTML += `
         <div class="analysis-card">
-            <div class="card-title" style="color:var(--success)">✅ Keywords Found <span class="badge green">${a.keywords_found.length}</span></div>
-            <div class="keyword-list">${a.keywords_found.map(k => `<span class="keyword-tag found">${k}</span>`).join("")}</div>
+            <div class="card-title" style="color:var(--success)">
+                ✅ Keywords Found <span class="badge green">${found.length}</span>
+            </div>
+            <div class="keyword-list">
+                ${found.length ? found.map(k => `<span class="keyword-tag found">${escapeHtml(k)}</span>`).join("") : "<span style='color:var(--text-muted);font-size:12px;'>None detected</span>"}
+            </div>
         </div>`;
 
-        // Keywords missing
-        grid.innerHTML += `
+    // Keywords missing
+    grid.innerHTML += `
         <div class="analysis-card">
-            <div class="card-title" style="color:var(--danger)">❌ Missing Keywords <span class="badge red">${a.keywords_missing.length}</span></div>
-            <div class="keyword-list">${a.keywords_missing.map(k => `<span class="keyword-tag missing">${k}</span>`).join("")}</div>
+            <div class="card-title" style="color:var(--danger)">
+                ❌ Missing Keywords <span class="badge red">${missing.length}</span>
+            </div>
+            <div class="keyword-list">
+                ${missing.length ? missing.map(k => `<span class="keyword-tag missing">${escapeHtml(k)}</span>`).join("") : "<span style='color:var(--success);font-size:12px;'>None — great coverage!</span>"}
+            </div>
         </div>`;
 
-        // Section scores
-        const sections = Object.entries(a.section_scores || {});
-        if (sections.length) {
-            grid.innerHTML += `
+    // Section scores
+    const sections = Object.entries(a.section_scores || {});
+    if (sections.length) {
+        grid.innerHTML += `
             <div class="analysis-card">
                 <div class="card-title" style="color:var(--primary)">📊 Section Scores</div>
-                <div class="section-score-list">${sections.map(([name, val]) => `
-                    <div class="section-score-item">
-                        <div class="section-score-label">${name}</div>
-                        <div class="section-score-bar-wrap">
-                            <div class="section-score-bar">
-                                <div class="section-score-fill" style="width:0%;background:${scoreColor(val)}" data-target="${val}"></div>
+                <div class="section-score-list">
+                    ${sections.map(([name, val]) => {
+                        const v = safeNum(val);
+                        return `<div class="section-score-item">
+                            <div class="section-score-label">${escapeHtml(name)}</div>
+                            <div class="section-score-bar-wrap">
+                                <div class="section-score-bar">
+                                    <div class="section-score-fill" style="background:${scoreColor(v)}" data-target="${v}"></div>
+                                </div>
+                                <div class="section-score-val">${v}</div>
                             </div>
-                            <div class="section-score-val">${val}</div>
-                        </div>
-                    </div>`).join("")}
+                        </div>`;
+                    }).join("")}
                 </div>
             </div>`;
-        }
+    }
 
-        // Strengths
-        if (a.strengths && a.strengths.length) {
-            grid.innerHTML += `
+    // Strengths
+    const strengths = safeArr(a.strengths);
+    if (strengths.length) {
+        grid.innerHTML += `
             <div class="analysis-card">
                 <div class="card-title" style="color:var(--success)">💪 Strengths</div>
-                <div class="suggestion-list">${a.strengths.map(s => `
-                    <div class="suggestion-item low">
-                        <div class="suggestion-icon">⭐</div>
-                        <div>${escapeHtml(s)}</div>
-                    </div>`).join("")}
+                <div class="suggestion-list">
+                    ${strengths.map(s => `
+                        <div class="suggestion-item low">
+                            <div class="suggestion-icon">⭐</div>
+                            <div>${escapeHtml(s)}</div>
+                        </div>`).join("")}
                 </div>
             </div>`;
-        }
+    }
 
-        // Improvement suggestions (full width)
-        if (a.suggestions && a.suggestions.length) {
-            const iconMap = { high:"🔴", medium:"🟡", low:"🟢" };
-            grid.innerHTML += `
+    // Improvement suggestions (full width)
+    const suggestions = safeArr(a.suggestions);
+    if (suggestions.length) {
+        const iconMap = { high: "🔴", medium: "🟡", low: "🟢" };
+        const validPriorities = ["high", "medium", "low"];
+        grid.innerHTML += `
             <div class="analysis-card full">
                 <div class="card-title" style="color:var(--warning)">⚡ Improvement Suggestions</div>
-                <div class="suggestion-list">${a.suggestions.map(s => `
-                    <div class="suggestion-item ${s.priority}">
-                        <div class="suggestion-icon">${iconMap[s.priority] || "💡"}</div>
-                        <div>${escapeHtml(s.text)}</div>
-                    </div>`).join("")}
+                <div class="suggestion-list">
+                    ${suggestions.map(s => {
+                        const p = validPriorities.includes(s.priority) ? s.priority : "medium";
+                        return `<div class="suggestion-item ${p}">
+                            <div class="suggestion-icon">${iconMap[p]}</div>
+                            <div>${escapeHtml(s.text)}</div>
+                        </div>`;
+                    }).join("")}
                 </div>
             </div>`;
-        }
+    }
 
-        // Format issues (full width)
-        if (a.format_issues && a.format_issues.length) {
-            grid.innerHTML += `
+    // Format issues (full width)
+    const formatIssues = safeArr(a.format_issues);
+    if (formatIssues.length) {
+        grid.innerHTML += `
             <div class="analysis-card full">
                 <div class="card-title" style="color:var(--text-muted)">⚠️ Format Issues</div>
-                <div class="suggestion-list">${a.format_issues.map(f => `
-                    <div class="suggestion-item medium">
-                        <div class="suggestion-icon">⚠️</div>
-                        <div>${escapeHtml(f)}</div>
-                    </div>`).join("")}
+                <div class="suggestion-list">
+                    ${formatIssues.map(f => `
+                        <div class="suggestion-item medium">
+                            <div class="suggestion-icon">⚠️</div>
+                            <div>${escapeHtml(f)}</div>
+                        </div>`).join("")}
                 </div>
             </div>`;
-        }
-
-        // Animate section bars
-        setTimeout(() => {
-            document.querySelectorAll(".section-score-fill").forEach(el => {
-                el.style.transition = "width 0.8s ease";
-                el.style.width = el.dataset.target + "%";
-            });
-        }, 300);
     }
 
-    // ── AI Chat ────────────────────────────────────────────────────
-    function appendMsg(role, text) {
-        const div = document.createElement("div");
-        div.className = `msg ${role}`;
-        div.innerHTML = `
-            <div class="msg-avatar">${role === "ai" ? "✨" : "U"}</div>
-            <div class="msg-bubble">${formatAIMsg(text)}</div>`;
-        const chat = document.getElementById("chatMessages");
-        chat.appendChild(div);
-        chat.scrollTop = chat.scrollHeight;
+    // Animate section bars after DOM paint
+    setTimeout(() => {
+        document.querySelectorAll(".section-score-fill").forEach(el => {
+            el.style.width = el.dataset.target + "%";
+        });
+    }, 300);
+}
+
+// ════════════════════════════════════════════════
+//  CONTEXT FOR CHAT
+// ════════════════════════════════════════════════
+function getContext() {
+    return [
+        `Resume:\n${getResumeText() || "(not provided)"}`,
+        `Job Description:\n${document.getElementById("inpJobDesc").value || "(not provided)"}`,
+        `Target Role: ${document.getElementById("inpJobTitle").value || "(not specified)"}`,
+        `Last ATS Analysis:\n${lastAnalysis ? JSON.stringify(lastAnalysis, null, 2) : "(not run yet)"}`
+    ].join("\n\n");
+}
+
+// ════════════════════════════════════════════════
+//  CHAT
+// ════════════════════════════════════════════════
+function appendMsg(role, text) {
+    const div = document.createElement("div");
+    div.className = `msg ${role}`;
+    div.innerHTML = `
+        <div class="msg-avatar">${role === "ai" ? "⚡" : "U"}</div>
+        <div class="msg-bubble">${formatAIMsg(text)}</div>`;
+    const chat = document.getElementById("chatMessages");
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+}
+
+function addTyping() {
+    const div = document.createElement("div");
+    div.className = "msg ai";
+    div.id = "typingIndicator";
+    div.innerHTML = `<div class="msg-avatar">⚡</div><div class="msg-bubble"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>`;
+    const chat = document.getElementById("chatMessages");
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+}
+
+function removeTyping() {
+    const t = document.getElementById("typingIndicator");
+    if (t) t.remove();
+}
+
+async function sendChatMessage(override) {
+    if (isChatBusy) return;
+
+    const input = document.getElementById("chatInput");
+    const text  = override || input.value.trim();
+    if (!text) return;
+
+    if (!API_KEY) {
+        appendMsg("ai", "⚠️ Please save your Groq API key first (click the 🔑 icon).");
+        return;
     }
 
-    function addTyping() {
-        const div = document.createElement("div");
-        div.className = "msg ai";
-        div.id = "typingIndicator";
-        div.innerHTML = `<div class="msg-avatar">✨</div><div class="msg-bubble"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
-        const chat = document.getElementById("chatMessages");
-        chat.appendChild(div);
-        chat.scrollTop = chat.scrollHeight;
-    }
+    isChatBusy = true;
+    input.value = "";
+    input.style.height = "auto";
 
-    function removeTyping() {
-        const t = document.getElementById("typingIndicator");
-        if (t) t.remove();
-    }
+    appendMsg("user", text);
+    chatHistory.push({ role: "user", content: text });
+    addTyping();
 
-    async function sendChatMessage(override) {
-        const input = document.getElementById("chatInput");
-        const text = override || input.value.trim();
-        if (!text) return;
-        if (!API_KEY) { appendMsg("ai", "⚠️ Please save your Anthropic API key first."); return; }
+    const system = `You are an expert resume writer and ATS coach. Give concise, actionable advice.
+Use bullet points when listing multiple items. Keep responses focused and under 200 words unless a rewrite is requested.
+Base all advice on the following context:\n\n${getContext()}`;
 
-        input.value = "";
-        appendMsg("user", text);
-        chatHistory.push({ role: "user", content: text });
-        addTyping();
+    try {
+        const data = await groqCall(API_KEY, chatHistory.slice(-8), system, 800);
+        removeTyping();
 
-        try {
-            const res = await fetch("https://api.anthropic.com/v1/messages", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    model: "claude-sonnet-4-6",
-                    max_tokens: 700,
-                    system: `You are an expert resume and ATS coach. Give concise, actionable advice. Use bullet points when listing items. Base your advice on the following context:\n\n${getContext()}`,
-                    messages: chatHistory.slice(-6)
-                })
-            });
-
-            removeTyping();
-            const data = await res.json();
-
-            if (data.error) {
-                appendMsg("ai", "❌ Error: " + data.error.message);
-                chatHistory.pop();
-                return;
-            }
-
-            const reply = data.content.filter(b => b.type === "text").map(b => b.text).join("");
+        if (data.error) {
+            handleGroqError(data.error);
+            appendMsg("ai", `❌ ${data.error.message || "API error — check your key."}`);
+            chatHistory.pop();
+        } else {
+            const reply = groqText(data);
             chatHistory.push({ role: "assistant", content: reply });
             appendMsg("ai", reply);
-
-        } catch (err) {
-            removeTyping();
-            appendMsg("ai", "Network error. Please try again.");
-            chatHistory.pop();
         }
+    } catch (err) {
+        removeTyping();
+        appendMsg("ai", `❌ Network error: ${err.message}`);
+        chatHistory.pop();
     }
 
-    function quickAction(text) { sendChatMessage(text); }
+    isChatBusy = false;
+}
 
-    function handleChatKey(e) {
-        if (e.key === "Enter" && !e.shiftKey) {
-            e.preventDefault();
-            sendChatMessage();
-        }
+function quickAction(text) { sendChatMessage(text); }
+
+function handleChatKey(e) {
+    if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendChatMessage();
     }
+}
 </script>
 </body>
 </html>
