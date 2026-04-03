@@ -22,7 +22,74 @@
             <a id="tags" href="#" onclick="scrollToSection('footsection')">FAQ</a>
             <a id="tags" href="#" onclick="scrollToSection('footsection')">Help</a>
 
-            <button id="navbarprofilebtn" onclick=""></button>
+            <div class="profile-container">
+                <button id="navbarprofilebtn"></button>
+                <div id="profile-dropdown" class="stylish-dropdown">
+                    <!-- Display Profile -->
+                    <div id="display-profile">
+                        <div class="profile-header">
+                            <div class="profile-avatar">
+                                <span id="avatar-initial">G</span>
+                            </div>
+                            <h3 id="display-name">Guest User</h3>
+                            <p class="profile-email" id="display-email">guest@example.com</p>
+                        </div>
+                        <div class="profile-details-grid">
+                            <div class="detail-item">
+                                <span class="detail-label">Course</span>
+                                <strong id="display-course">B.E.</strong>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Branch</span>
+                                <strong id="display-branch">Computer Science</strong>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Year</span>
+                                <strong id="display-year">3rd Year</strong>
+                            </div>
+                        </div>
+                        <button id="edit-profile-btn" class="profile-btn modern-btn">Edit Profile</button>
+                    </div>
+
+                    <!-- Edit Profile -->
+                    <div id="edit-profile" style="display: none;">
+                        <div class="edit-header">
+                            <h3>Edit Profile</h3>
+                            <p>Update your personal information</p>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Full Name</label>
+                            <input type="text" id="edit-name" class="profile-input" placeholder="e.g. John Doe">
+                        </div>
+                        <div class="input-group">
+                            <label>Email Address</label>
+                            <input type="email" id="edit-email" class="profile-input" placeholder="e.g. john@example.com">
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label>Course</label>
+                                <input type="text" id="edit-course" class="profile-input" placeholder="e.g. B.Tech">
+                            </div>
+                            <div class="input-group">
+                                <label>Branch</label>
+                                <input type="text" id="edit-branch" class="profile-input" placeholder="e.g. IT">
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>College Year</label>
+                            <input type="text" id="edit-year" class="profile-input" placeholder="e.g. 2nd Year">
+                        </div>
+                        
+                        <div class="profile-actions">
+                            <button id="cancel-profile-btn" class="profile-btn modern-cancel-btn">Cancel</button>
+                            <button id="save-profile-btn" class="profile-btn modern-save-btn">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <button id="logoutbtn">Logout</button>
         </div>
     </header>
@@ -34,9 +101,9 @@
         <div class="dashitems">
             <!-- <div id="profilebtn"> My Profile</div> -->
             <div onclick="window.location.href='companies.html';" id="companybtn">Companies</div>
+            <div id="eligibilitybtn">Eligibility check</div>
             <div id="builderbtn">Resume Builder</div>
             <div id="roadmapbtn">ATS Check</div>
-            <div id="eligibilitybtn">Roadmap</div>
         </div>
     </main>
 
@@ -90,9 +157,95 @@
         </h4>
     </footer>
     <script>
-        const profilebtn = document.getElementById("navbarprofilebtn")
-        profilebtn.onclick = function () {
-            window.location.href = "profile.html";
+        // Profile Functionality
+        const profileBtn = document.getElementById('navbarprofilebtn');
+        const profileDropdown = document.getElementById('profile-dropdown');
+        const displayDiv = document.getElementById('display-profile');
+        const editDiv = document.getElementById('edit-profile');
+
+        const editProfileBtn = document.getElementById('edit-profile-btn');
+        const saveProfileBtn = document.getElementById('save-profile-btn');
+        const cancelProfileBtn = document.getElementById('cancel-profile-btn');
+
+        // Profile state, defaults initialized from localStorage if available
+        const profileData = {
+            name: localStorage.getItem('profile-name') || 'Guest User',
+            email: localStorage.getItem('profile-email') || 'guest@example.com',
+            course: localStorage.getItem('profile-course') || 'B.E.',
+            branch: localStorage.getItem('profile-branch') || 'Computer Science',
+            year: localStorage.getItem('profile-year') || '3rd Year'
+        };
+
+        function updateProfileDisplay() {
+            document.getElementById('display-name').textContent = profileData.name;
+            document.getElementById('display-email').textContent = profileData.email;
+            document.getElementById('display-course').textContent = profileData.course;
+            document.getElementById('display-branch').textContent = profileData.branch;
+            document.getElementById('display-year').textContent = profileData.year;
+            
+            // Update Avatar initial
+            let initial = profileData.name ? profileData.name.charAt(0).toUpperCase() : 'U';
+            document.getElementById('avatar-initial').textContent = initial;
+        }
+
+        updateProfileDisplay();
+
+        profileBtn.onclick = function(e) {
+            e.stopPropagation();
+            profileDropdown.classList.toggle('show');
+        };
+
+        // Close dropdown when clicking outside
+        window.onclick = function(event) {
+            if (!event.target.closest('.profile-container')) {
+                if (profileDropdown.classList.contains('show')) {
+                    profileDropdown.classList.remove('show');
+                    // Reset to display mode if closed while editing
+                    displayDiv.style.display = 'block';
+                    editDiv.style.display = 'none';
+                }
+            }
+        };
+
+        editProfileBtn.onclick = function() {
+            displayDiv.style.display = 'none';
+            editDiv.style.display = 'block';
+            
+            // Populate inputs
+            document.getElementById('edit-name').value = profileData.name;
+            document.getElementById('edit-email').value = profileData.email;
+            document.getElementById('edit-course').value = profileData.course;
+            document.getElementById('edit-branch').value = profileData.branch;
+            document.getElementById('edit-year').value = profileData.year;
+        };
+
+        cancelProfileBtn.onclick = function() {
+            displayDiv.style.display = 'block';
+            editDiv.style.display = 'none';
+        };
+
+        saveProfileBtn.onclick = function() {
+            profileData.name = document.getElementById('edit-name').value;
+            profileData.email = document.getElementById('edit-email').value;
+            profileData.course = document.getElementById('edit-course').value;
+            profileData.branch = document.getElementById('edit-branch').value;
+            profileData.year = document.getElementById('edit-year').value;
+
+            // Save to localStorage so it persists
+            localStorage.setItem('profile-name', profileData.name);
+            localStorage.setItem('profile-email', profileData.email);
+            localStorage.setItem('profile-course', profileData.course);
+            localStorage.setItem('profile-branch', profileData.branch);
+            localStorage.setItem('profile-year', profileData.year);
+
+            updateProfileDisplay();
+            
+            displayDiv.style.display = 'block';
+            editDiv.style.display = 'none';
+        };
+
+        profileDropdown.onclick = function(e) {
+            e.stopPropagation();
         };
         const roadmapbtn = document.getElementById("roadmapbtn")
         roadmapbtn.onclick = function () {
@@ -100,11 +253,7 @@
         };
         const resumebtn = document.getElementById("builderbtn")
         resumebtn.onclick = function () {
-            window.location.href = "resume-builder.html";
-        };
-         const eligibilitybtn = document.getElementById("eligibilitybtn")
-        eligibilitybtn.onclick = function () {
-            window.location.href = "roadmap.html";
+            window.location.href = "./resume-builder.html";
         };
 
         function scrollToSection(id) {
