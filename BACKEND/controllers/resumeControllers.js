@@ -1,7 +1,7 @@
 const resumedata = require('./../models/resume');
 
 //post method for resume data sending
-const createResume = async (req, res) => {
+const saveResumeToDb = async (req, res) => {
     try {
         const data = req.body
         const newresumedata = new resumedata(data);
@@ -15,7 +15,7 @@ const createResume = async (req, res) => {
     }
 };
 //get method for resume data fetching for allresume
-const getAllResumes= async (req, res) => {
+const loadSavedResumes= async (req, res) => {
     try {
         const data = await resumedata.find();
         console.log('Resume data Fetched');
@@ -88,8 +88,8 @@ const deleteResume = async (req, res) => {
 };
 
 module.exports = {
-    createResume,
-    getAllResumes,
+    saveResumeToDb,
+    loadSavedResumes,
     getResumeById,
     deleteResume,
     updateResume

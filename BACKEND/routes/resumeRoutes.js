@@ -9,8 +9,8 @@ const {
     deleteResume
 } = require('../controllers/resumeControllers');
 
-router.post('/',createResume);
-router.get('/',getAllResumes);
+router.post("/", saveResumeToDb);
+router.get("/", loadSavedResumes);
 router.get('/:id',getResumeById);
 router.put('/:id',updateResume);
 router.delete('/:id',deleteResume);
