@@ -176,35 +176,52 @@
         Download as PDF
       </button>
 
-      <div class="form-group" style="margin-top: 10px">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px;">
         <button
           class="btn"
           onclick="saveResumeToDb()"
-          style="background-color: #28a745; border: none"
+          style="background-color: #10b981; border: none; font-size: 14px; padding: 10px; box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);"
         >
-          Save Resume to Database
+          Save
         </button>
         <button
           class="btn"
           onclick="loadSavedResumes()"
-          style="background-color: #007bff; border: none; margin-left: 6px"
+          style="background-color: #3b82f6; border: none; font-size: 14px; padding: 10px; box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);"
         >
-          Load Saved Resumes
+          Load
+        </button>
+        <button
+          class="btn"
+          onclick="updateSavedResume()"
+          style="background-color: #f59e0b; border: none; font-size: 14px; padding: 10px; box-shadow: 0 4px 6px rgba(245, 158, 11, 0.2); color: white;"
+        >
+          Update
+        </button>
+        <button
+          class="btn"
+          onclick="deleteSavedResume()"
+          style="background-color: #ef4444; border: none; font-size: 14px; padding: 10px; box-shadow: 0 4px 6px rgba(239, 68, 68, 0.2); color: white;"
+        >
+          Delete
         </button>
       </div>
       <div
         id="savedResumesPanel"
         style="
-          margin-top: 10px;
-          background: #f9f9f9;
-          border: 1px solid #ddd;
-          padding: 10px;
-          max-height: 170px;
+          margin-top: 15px;
+          margin-bottom: 20px;
+          background: #f8fafc;
+          border: 2px dashed #cbd5e1;
+          border-radius: 8px;
+          padding: 15px;
+          min-height: 120px;
+          max-height: 300px;
           overflow: auto;
         "
       >
-        <strong>Saved Resumes</strong>
-        <div id="savedResumesList">(no resumes loaded yet)</div>
+        <strong style="display: block; margin-bottom: 10px; color: #1e293b; font-size: 16px; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px;">💾 Saved Resumes</strong>
+        <div id="savedResumesList" style="color: #64748b; font-size: 14px; line-height: 1.6;">(no resumes loaded yet)</div>
       </div>
     </div>
 
