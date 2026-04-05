@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 const {
-    createResume,
-    getAllResumes,
+    saveResumeToDb,
+    loadSavedResumes,
     getResumeById,
     updateResume,
     deleteResume
@@ -11,7 +11,7 @@ const {
 
 router.post("/", saveResumeToDb);
 router.get("/", loadSavedResumes);
-router.get('/:id',getResumeById);
+router.get('/',getResumeById);
 router.put('/:id',updateResume);
 router.delete('/:id',deleteResume);
 

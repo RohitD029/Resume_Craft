@@ -1,149 +1,131 @@
+/* ===== RESET ===== */
 * {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
+/* ===== BODY ===== */
 body {
     height: 100vh;
-    background-color: #f4f6f8;
-    font-family: cursive;
+
+    /* SAME AS LANDING PAGE */
+    font-family: 'Poppins', sans-serif;
+
+    background: linear-gradient(135deg, #eef2f7, #dbe6f6);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.container {
-    border-radius: 1rem;
-    height: 320px;
-    width: 280px;
-    text-align: center;
-    border: 1px solid #ccc;
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+/* ===== CONTAINERS ===== */
+.container,
+.registercontainer {
+    width: 340px;
+    padding: 30px;
+    border-radius: 20px;
 
-    margin: 80px auto;
+    background: #ffffff;
+
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+    text-align: center;
+}
+
+/* ===== HEADINGS ===== */
+#loginhead,
+.registercontainer h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: #0b1e3a;
 }
 
 #head {
-    margin-top: 10px;
-    font-size: 25px;
-    font-weight: 200;
-    text-align: center;
-}
-
-#loginhead {
-    margin: 10px;
-    font-size: 30px;
-}
-
-#loginarea input {
-    width: 90%;
-    height: 20px;
-    padding: 5px 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: 1px solid #aaa;
     font-size: 14px;
+    color: #5c6f91;
+    margin-bottom: 20px;
 }
 
-#loginarea button {
-    width: 50%;
-    height: 40px;
-    padding: 10px 10px;
-    margin: 10px 0;
-    border: 2px solid black;
-    border-radius: 0.5rem;
-    border: 1px solid #aaa;
-    font-size: 14px;
-    background-color: #0d6efd;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-#notfound{
-    display: none;
-}
-
-#loginarea button:hover {
-    background-color: #0b5ed7;
-}
-
-.container p {
-    margin-top: 25px;
-}
-
-/*Register page*/
-/* ===== REGISTER PAGE (LOGIN-LIKE) ===== */
-.registercontainer {
-    border-radius: 1rem;
-    width: 320px;
-    text-align: center;
-    border: 1px solid #ccc;
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    margin: 80px auto;
-}
-
-/* Heading */
-.registercontainer h2 {
-    font-size: 30px;
-    font-weight: 500;
-    margin-bottom: 10px;
-}
-
-/* Form spacing */
-.registercontainer form {
-    margin-top: 10px;
-}
-
-/* Inputs, select, textarea */
+/* ===== INPUTS ===== */
+#loginarea input,
 .registercontainer input,
 .registercontainer select,
 .registercontainer textarea {
-    width: 90%;
-    height: 25px;
-    padding: 5px 10px;
+    width: 100%;
+    padding: 12px;
     margin: 10px 0;
-    border-radius: 5px;
-    border: 1px solid #aaa;
-    font-size: 14px;
+
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+
+    background: #ffffff;
+    color: #0b1e3a;
+
+    outline: none;
+    transition: 0.3s;
 }
 
-/* Textarea size */
-#projecttxt {
-    height: 70px;
-    resize: none;
+/* Placeholder */
+input::placeholder,
+textarea::placeholder {
+    color: #8fa1c2;
 }
 
-/* Button styling (same as login) */
+/* Focus effect */
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #4da3ff;
+    box-shadow: 0 0 6px rgba(77, 163, 255, 0.3);
+}
+
+/* ===== BUTTON ===== */
+#loginarea button,
 .registercontainer button {
-    width: 50%;
-    height: 40px;
-    padding: 10px 10px;
-    margin: 10px 0;
-    border-radius: 0.5rem;
-    border: 1px solid #aaa;
-    font-size: 14px;
-    background-color: #0d6efd;
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: linear-gradient(135deg, #4da3ff, #2563eb);
     color: white;
+
+    font-size: 15px;
+    font-weight: 500;
+
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: 0.3s;
 }
 
-/* Button hover */
-.registercontainer button:hover {
-    background-color: #0b5ed7;
+/* Hover */
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(37, 99, 235, 0.3);
 }
 
-/* Footer text */
+/* ===== TEXT ===== */
+.container p,
 .registercontainer p {
-    margin-top: 25px;
+    margin-top: 20px;
+    color: #5c6f91;
 }
 
-.registercontainer p a {
-    color: #0d6efd;
+/* Links */
+a {
+    color: #2563eb;
     text-decoration: none;
 }
 
-.registercontainer p a:hover {
+a:hover {
     text-decoration: underline;
+}
+
+/* ===== TEXTAREA ===== */
+#projecttxt {
+    height: 80px;
+    resize: none;
 }
