@@ -561,7 +561,12 @@
 
     <!-- RIGHT AI SIDEBAR -->
     <div class="ai-sidebar">
-      <div class="ai-header"><span>✨</span> AI Resume Assistant</div>
+      <div class="ai-header">
+        <div class="ai-header-left">
+          <span>✨</span> AI Resume Assistant
+        </div>
+        <button class="ai-key-btn" onclick="toggleApiBanner()" title="Edit API Key">🔑</button>
+      </div>
 
       <div class="ai-banner" id="apiBanner">
         <strong style="font-size: 11px">Connect Anthropic API</strong>

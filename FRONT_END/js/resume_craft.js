@@ -576,6 +576,11 @@ if (API_KEY) document.getElementById("apiBanner").style.display = "none";
 
 let chatHistory = [];
 
+function toggleApiBanner() {
+  const banner = document.getElementById("apiBanner");
+  banner.style.display = banner.style.display === "none" ? "block" : "none";
+}
+
 function saveApiKey() {
   const key = document.getElementById("apiKeyInput").value.trim();
   if (!key) {

@@ -319,7 +319,10 @@
         #tpl5 .t5-ref-contact { font-size: 14px; color: #4a5568; }
 
         /* AI Chat Styles */
-        .ai-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; background: var(--panel-bg); font-weight: 600; color: var(--text-main); font-size: 14px; }
+        .ai-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 10px; background: var(--panel-bg); font-weight: 600; color: var(--text-main); font-size: 14px; }
+        .ai-header-left { display: flex; align-items: center; gap: 8px; }
+        .ai-key-btn { background: none; border: none; cursor: pointer; opacity: 0.7; font-size: 14px; padding: 4px; border-radius: 4px; transition: opacity 0.2s; }
+        .ai-key-btn:hover { opacity: 1; }
 
         .ai-banner { background: #EFF6FF; padding: 10px 14px; border-bottom: 1px solid #DBEAFE; font-size: 14px; }
         .api-input-wrap { display: flex; gap: 6px; margin-top: 6px; }
