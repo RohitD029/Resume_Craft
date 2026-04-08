@@ -2,21 +2,31 @@
     margin: 0px;
     padding: 0px;
 }
+html {
+    scroll-behavior: smooth;
+}
 body{
     min-height: 100vh;
     background-image: url("../img/dashboard_bg.jpg");
     background-size: cover;
-    background-position: center;
+    background-position: fixed;
     background-repeat: no-repeat;
     background-color: var(--bg-color);
     color: var(--text-primary);
-    font-family: 'Poppins', sans-serif;
 }
 .navbar{
+    --bg-color: #0f172a;
+    --surface-color: #1e293b;
+    --surface-color-hover: #334155;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --border-color: #334155;
+    
     width: 100%;
     height: 70px;
-    background-color: var(--surface-color);
-    color: var(--text-primary);
+    background-color: var(--surface-color) !important;
+    color: var(--text-primary) !important;
     display: flex;
     align-items: center;
     font-weight: 600;
@@ -89,7 +99,6 @@ body{
     z-index: 1000;
     padding: 25px;
     font-size: 14px;
-    font-family: 'Poppins', sans-serif;
     border: 1px solid rgba(255, 255, 255, 0.2);
     transition: all 0.3s ease;
 }
@@ -336,16 +345,18 @@ body{
 .dashitems{
     /* background-color: #f4f6f8; */
     padding: 60px;
-    height: 60vh;
-    width: 190vb;
+    min-height: 50vh;
+    width: 100%;
+    box-sizing: border-box;
     display: flex;
-    
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
 }
 
 #profilebtn, #companybtn, #eligibilitybtn, #builderbtn,#roadmapbtn {
     height: 300px;
     width: 300px;
-    margin-left: 60px;
     border-radius: 1rem;
     cursor: pointer;
 
@@ -400,9 +411,17 @@ body{
 }
 /* Footer section */
 #footsection{
+    --bg-color: #0f172a;
+    --surface-color: #1e293b;
+    --surface-color-hover: #334155;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --border-color: #334155;
+    
     height: 400px;
-    width:100%;
-    background-color: var(--surface-color);
+    width: 100%;
+    background-color: var(--surface-color) !important;
 }
 .footcontent{
     display: flex;
