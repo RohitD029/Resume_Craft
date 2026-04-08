@@ -17,6 +17,18 @@ const userSchema = new mongoose.Schema({
   password:{
     type:String,
     required:true
+  },
+  course:{
+    type:String,
+    default:""
+  },
+  branch:{
+    type:String,
+    default:""
+  },
+  year:{
+    type:String,
+    default:""
   }
 },{timestamps:true});
 

@@ -64,6 +64,13 @@ if (loginForm) {
 
             if (res.status === 200) {
 
+                localStorage.setItem('profile-id', data.user._id);
+                localStorage.setItem('profile-name', data.user.name || '');
+                localStorage.setItem('profile-email', data.user.email || '');
+                localStorage.setItem('profile-course', data.user.course || '');
+                localStorage.setItem('profile-branch', data.user.branch || '');
+                localStorage.setItem('profile-year', data.user.year || '');
+
                 alert("Login Successful");
                 window.location.href = "dashboard.html";
 

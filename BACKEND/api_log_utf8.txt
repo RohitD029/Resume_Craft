@@ -1,0 +1,101 @@
+﻿[dotenv@17.3.1] injecting env (0) from .env -- tip: ≡ƒöÉ prevent committing .env to code: https://dotenvx.com/precommit
+Server is running on http://localhost:3000
+mongodb Connection error
+node : 
+MongooseError: 
+The `uri` 
+parameter to 
+`openUri()` must 
+be a string, got 
+"undefined". 
+Make sure the 
+first parameter 
+to `mongoose.conn
+ect()` or `mongoo
+se.createConnecti
+on()` is a 
+string.
+At line:1 char:1
++ node server.js 
+> api_log.txt 
+2>&1
++ ~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
+~
+    + CategoryIn 
+   fo            
+  : NotSpecifi   
+ ed: (Mongoos    
+eError: ...)    
+` is a strin    
+g.:String) [    
+], RemoteExc    
+eption
+    + FullyQuali 
+   fiedErrorId   
+  : NativeComm   
+ andError
+ 
+    at NativeConn
+ection.createClie
+nt (C:\Users\rohi
+t\OneDrive\Deskto
+p\RESUME-BUILDER\
+BACKEND\node_modu
+les\mongoose\lib\
+drivers\node-mong
+odb-native\connec
+tion.js:230:11)
+    at NativeConn
+ection.openUri (C
+:\Users\rohit\One
+Drive\Desktop\RES
+UME-BUILDER\BACKE
+ND\node_modules\m
+ongoose\lib\conne
+ction.js:1075:34)
+    at 
+Mongoose.connect 
+(C:\Users\rohit\O
+neDrive\Desktop\R
+ESUME-BUILDER\BAC
+KEND\node_modules
+\mongoose\lib\mon
+goose.js:471:15)
+    at connectDB 
+(C:\Users\rohit\O
+neDrive\Desktop\R
+ESUME-BUILDER\BAC
+KEND\config\db.js
+:7:20)
+    at Object.<an
+onymous> (C:\User
+s\rohit\OneDrive\
+Desktop\RESUME-BU
+ILDER\BACKEND\ser
+ver.js:13:1)
+    at 
+Module._compile (
+node:internal/mod
+ules/cjs/loader:1
+812:14)
+    at 
+Object..js (node:
+internal/modules/
+cjs/loader:1943:1
+0)
+    at 
+Module.load (node
+:internal/modules
+/cjs/loader:1533:
+32)
+    at 
+Module._load (nod
+e:internal/module
+s/cjs/loader:1335
+:12)
+    at 
+wrapModuleLoad (n
+ode:internal/modu
+les/cjs/loader:25
+5:19)

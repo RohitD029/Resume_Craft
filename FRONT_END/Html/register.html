@@ -15,11 +15,16 @@
         <form>
             <input type="text" placeholder="Full name" required>
             <input type="text" placeholder="Username" required>
-            <input type="text" placeholder="Password">
-            <input type="email" placeholder="Email">
-            <input type="text" placeholder="Enter College Name">
+            
+            <div style="position: relative; margin: 10px 0;">
+                <input type="password" id="reg-password" placeholder="Password" required style="margin: 0; padding-right: 40px;">
+                <span id="togglePassword" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 18px;" title="Toggle Password Visibility">👁️</span>
+            </div>
 
-            <select id="role">
+            <input type="email" placeholder="Email" required>
+            <input type="text" placeholder="Enter College Name" required>
+
+            <select id="role" required>
                 <option value="">Select Year</option>
                 <option>First Year</option>
                 <option>Second Year</option>
@@ -27,7 +32,7 @@
                 <option>Final Year</option>
             </select>
 
-            <input type="number" placeholder="Enter phone number">
+            <input type="number" placeholder="Enter phone number" required>
 
             <button type="submit">Register</button>
         </form>
@@ -35,6 +40,16 @@
         <p>Already have an account? <a href="login.html">Login</a></p>
     </div>
 
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const password = document.getElementById('reg-password');
+
+        togglePassword.addEventListener('click', function () {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.textContent = type === 'password' ? '👁️' : '🙈';
+        });
+    </script>
     <script src="../js/Auth.js"></script>
 </body>
 

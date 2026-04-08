@@ -261,12 +261,36 @@
             editDiv.style.display = 'none';
         };
 
-        saveProfileBtn.onclick = function() {
+        saveProfileBtn.onclick = async function() {
             profileData.name = document.getElementById('edit-name').value;
             profileData.email = document.getElementById('edit-email').value;
             profileData.course = document.getElementById('edit-course').value;
             profileData.branch = document.getElementById('edit-branch').value;
             profileData.year = document.getElementById('edit-year').value;
+
+            const userId = localStorage.getItem('profile-id');
+            if (userId) {
+                try {
+                    const res = await fetch("http://localhost:3000/api/users/updateProfile", {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            userId: userId,
+                            name: profileData.name,
+                            email: profileData.email,
+                            course: profileData.course,
+                            branch: profileData.branch,
+                            year: profileData.year
+                        })
+                    });
+                    const data = await res.json();
+                    if (res.status !== 200) {
+                        console.error("Failed to update profile", data);
+                    }
+                } catch (err) {
+                    console.error("Error updating profile", err);
+                }
+            }
 
             // Save to localStorage so it persists
             localStorage.setItem('profile-name', profileData.name);
