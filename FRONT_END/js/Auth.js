@@ -18,7 +18,7 @@ if (registerForm) {
 
         try {
 
-            const res = await fetch("http://localhost:3000/api/users/signup", {
+            const res = await fetch("https://resumebuilder-pv1p.onrender.com/api/users/signup", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
