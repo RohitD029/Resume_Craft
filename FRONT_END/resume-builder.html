@@ -159,7 +159,18 @@
         ></textarea>
       </div>
 
-      <button class="btn" onclick="window.print()" style="margin-top: 8px">
+      
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px;">
+        <button
+          class="btn"
+          onclick="saveResumeToDb()"
+          style="background-color: #10b981; border: none; font-size: 14px; padding: 10px; box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);"
+        >
+          Save
+        </button>
+
+        <button class="btn" onclick="window.print()" style="background-color: #3b82f6; border: none; font-size: 14px; padding: 10px; box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);">
         <svg
           width="16"
           height="16"
@@ -176,21 +187,6 @@
         Download as PDF
       </button>
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px;">
-        <button
-          class="btn"
-          onclick="saveResumeToDb()"
-          style="background-color: #10b981; border: none; font-size: 14px; padding: 10px; box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);"
-        >
-          Save
-        </button>
-        <button
-          class="btn"
-          onclick="loadSavedResumes()"
-          style="background-color: #3b82f6; border: none; font-size: 14px; padding: 10px; box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);"
-        >
-          Load
-        </button>
         <button
           class="btn"
           onclick="updateSavedResume()"
