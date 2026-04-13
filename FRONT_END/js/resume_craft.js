@@ -426,7 +426,7 @@ function renderResume() {
 const API_BASE_URL = "https://resume-craft-8b70.onrender.com/api/resume";
 
 function getResumePayload() {
-  const userId = localStorage.getItem('profile-id');
+  const userId = localStorage.getItem("profile-id");
   if (!userId) {
     alert("You must be logged in to save resumes.");
     return null;
@@ -490,10 +490,11 @@ async function saveResumeToDb() {
 
 async function loadSavedResumes() {
   try {
-    const userId = localStorage.getItem('profile-id');
+    const userId = localStorage.getItem("profile-id");
     if (!userId) {
       const list = document.getElementById("savedResumesList");
-      if (list) list.innerHTML = "<div>Please login to view saved resumes.</div>";
+      if (list)
+        list.innerHTML = "<div>Please login to view saved resumes.</div>";
       return;
     }
     const response = await fetch(`${API_BASE_URL}/user/${userId}`);
@@ -586,7 +587,9 @@ function fillFormFromResume(id) {
 
 async function updateSavedResume() {
   if (!window.currentResumeId) {
-    alert("No generated resume selected to update. Please 'Load' a resume first.");
+    alert(
+      "No generated resume selected to update. Please 'Load' a resume first.",
+    );
     return;
   }
   try {
@@ -608,7 +611,9 @@ async function updateSavedResume() {
 
 async function deleteSavedResume() {
   if (!window.currentResumeId) {
-    alert("No generated resume selected to delete. Please 'Load' a resume first.");
+    alert(
+      "No generated resume selected to delete. Please 'Load' a resume first.",
+    );
     return;
   }
   if (!confirm("Are you sure you want to delete this resume?")) return;
@@ -714,20 +719,23 @@ async function sendMessage(overrideText) {
   chatHistory.push({ role: "user", content: text });
   addTypingIndicator();
   try {
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": API_KEY,
-        "anthropic-version": "2023-06-01",
+    const response = await fetch(
+      "https://api.groq.com/openai/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": API_KEY,
+          "anthropic-version": "2023-06-01",
+        },
+        body: JSON.stringify({
+          model: "llama3-70b-8192",
+          max_tokens: 1000,
+          system: `You are a professional resume advisor. Keep responses concise, encouraging, and highly actionable. Format advice with clear bullet points. Base your advice on this real-time resume data:\n\n${getResumeContext()}`,
+          messages: chatHistory.slice(-6),
+        }),
       },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 1000,
-        system: `You are a professional resume advisor. Keep responses concise, encouraging, and highly actionable. Format advice with clear bullet points. Base your advice on this real-time resume data:\n\n${getResumeContext()}`,
-        messages: chatHistory.slice(-6),
-      }),
-    });
+    );
     removeTypingIndicator();
     const data = await response.json();
     if (data.error) {
