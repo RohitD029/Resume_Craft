@@ -636,7 +636,7 @@ updateResume();
 loadSavedResumes();
 
 // AI Assistant
-let API_KEY = localStorage.getItem("resume_anthropic_key") || "";
+let API_KEY = localStorage.getItem("resume_groq_key") || "";
 if (API_KEY) document.getElementById("apiBanner").style.display = "none";
 
 let chatHistory = [];
@@ -653,9 +653,9 @@ function saveApiKey() {
     return;
   }
   API_KEY = key;
-  localStorage.setItem("resume_anthropic_key", key);
+  localStorage.setItem("resume_groq_key", key);
   document.getElementById("apiBanner").style.display = "none";
-  addAIMessage("✅ API key saved! I'm ready to help with your resume.");
+  addAIMessage("✅ Groq API key saved! I'm ready to help.");
 }
 
 function getResumeContext() {
@@ -710,14 +710,19 @@ async function sendMessage(overrideText) {
   const input = document.getElementById("chatInput");
   const text = overrideText || input.value.trim();
   if (!text) return;
+
   if (!API_KEY) {
-    addAIMessage("⚠️ Please save your Anthropic API key first.");
+    addAIMessage("⚠️ Please save your Groq API key first.");
     return;
   }
+
   input.value = "";
   addUserMessage(text);
+
   chatHistory.push({ role: "user", content: text });
+
   addTypingIndicator();
+
   try {
     const response = await fetch(
       "https://api.groq.com/openai/v1/chat/completions",
@@ -725,32 +730,41 @@ async function sendMessage(overrideText) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": API_KEY,
-          "anthropic-version": "2023-06-01",
+          Authorization: `Bearer ${API_KEY}`,
         },
         body: JSON.stringify({
-          model: "llama3-70b-8192",
-          max_tokens: 1000,
-          system: `You are a professional resume advisor. Keep responses concise, encouraging, and highly actionable. Format advice with clear bullet points. Base your advice on this real-time resume data:\n\n${getResumeContext()}`,
-          messages: chatHistory.slice(-6),
+          model: "llama3-70b-8192", // 🔥 best Groq model
+          messages: [
+            {
+              role: "system",
+              content: `You are a professional resume advisor. Keep responses concise, encouraging, and highly actionable. Use bullet points. Base your advice on this resume:\n\n${getResumeContext()}`,
+            },
+            ...chatHistory.slice(-6),
+          ],
+          temperature: 0.7,
         }),
       },
     );
+
     removeTypingIndicator();
+
     const data = await response.json();
-    if (data.error) {
-      addAIMessage(`❌ Error: ${data.error.message}`);
+
+    if (!response.ok) {
+      addAIMessage(`❌ Error: ${data.error?.message || "Request failed"}`);
       chatHistory.pop();
-    } else {
-      const reply = data.content
-        .map((c) => (c.type === "text" ? c.text : ""))
-        .join("");
-      chatHistory.push({ role: "assistant", content: reply });
-      addAIMessage(reply);
+      return;
     }
-  } catch (e) {
+
+    const reply = data.choices?.[0]?.message?.content || "No response";
+
+    chatHistory.push({ role: "assistant", content: reply });
+
+    addAIMessage(reply);
+  } catch (err) {
     removeTypingIndicator();
-    addAIMessage("Network error. Please try again.");
+    console.error(err);
+    addAIMessage("❌ Network error. Please try again.");
     chatHistory.pop();
   }
 }
