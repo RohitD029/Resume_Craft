@@ -1,45 +1,68 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Campus connect|login</title>
-    <link rel="stylesheet" href="../css/login.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-</head>
+    <link rel="stylesheet" href="../css/login.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<body>
+  <body>
     <div class="container">
+      <h2 id="loginhead">Login</h2>
+      <form id="loginarea">
+        <input type="text" placeholder="Username" required />
 
-        <h2 id="loginhead">Login</h2>
-        <form id="loginarea">
-            <input type="text" placeholder="Username" required>
-            
-            <div style="position: relative; margin: 10px 0;">
-                <input type="password" id="login-password" placeholder="Password" required style="margin: 0; padding-right: 40px;">
-                <span id="toggleLoginPassword" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 18px;" title="Toggle Password Visibility">👁️</span>
-            </div>
-            
-            <button type="submit">Login</button>
-        </form>
+        <div style="position: relative; margin: 10px 0">
+          <input
+            type="password"
+            id="login-password"
+            placeholder="Password"
+            required
+            style="margin: 0; padding-right: 40px"
+          />
+          <span
+            id="toggleLoginPassword"
+            style="
+              position: absolute;
+              right: 15px;
+              top: 50%;
+              transform: translateY(-50%);
+              cursor: pointer;
+              font-size: 18px;
+            "
+            title="Toggle Password Visibility"
+            >👁️</span
+          >
+        </div>
 
-        <p id="notfound">Incorrect Username or password</p>
+        <button type="submit">Login</button>
+      </form>
 
-        <p>New here?<a href="register.html">Create Account</a></p>
+      <p id="notfound">Incorrect Username or password</p>
+
+      <p>New here?<a href="register.html">Create Account</a></p>
     </div>
 
     <script>
-        const toggleLoginPassword = document.getElementById('toggleLoginPassword');
-        const loginPassword = document.getElementById('login-password');
+      const toggleLoginPassword = document.getElementById(
+        "toggleLoginPassword",
+      );
+      const loginPassword = document.getElementById("login-password");
 
-        toggleLoginPassword.addEventListener('click', function () {
-            const type = loginPassword.getAttribute('type') === 'password' ? 'text' : 'password';
-            loginPassword.setAttribute('type', type);
-            this.textContent = type === 'password' ? '👁️' : '🙈';
-        });
+      toggleLoginPassword.addEventListener("click", function () {
+        const type =
+          loginPassword.getAttribute("type") === "password"
+            ? "text"
+            : "password";
+        loginPassword.setAttribute("type", type);
+        this.textContent = type === "password" ? "👁️" : "🙈";
+      });
     </script>
-    <script src="../js/Auth.js"></script>
-</body>
-
+    <script src="./js/Auth.js"></script>
+  </body>
 </html>

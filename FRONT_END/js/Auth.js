@@ -1,4 +1,6 @@
 //signup
+console.log("JS Loaded");
+
 const registerForm = document.querySelector(".registercontainer form");
 
 if (registerForm) {
