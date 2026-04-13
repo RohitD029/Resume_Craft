@@ -6,7 +6,14 @@ const cors = require("cors");
 require("dotenv").config();
 
 //Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://resume-craft-beryl.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  }),
+);
+app.options("*", cors());
 app.use(express.json());
 
 //connect to MongoDB

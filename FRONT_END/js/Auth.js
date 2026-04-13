@@ -53,7 +53,7 @@ if (loginForm) {
         try {
 
             const res = await fetch(
-              "https://resumebuilder-pv1p.onrender.com/api/login",
+              "https://resumebuilder-pv1p.onrender.com/api/users/login",
               {
                 method: "POST",
                 headers: {
