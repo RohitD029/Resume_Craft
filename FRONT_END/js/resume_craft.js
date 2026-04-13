@@ -423,7 +423,7 @@ function renderResume() {
   }
 }
 
-const API_BASE_URL = "https://resumebuilder-pv1p.onrender.com/api/resume";
+const API_BASE_URL = "https://resume-craft-8b70.onrender.com/api/resume";
 
 function getResumePayload() {
   const userId = localStorage.getItem('profile-id');
