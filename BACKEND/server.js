@@ -1,37 +1,38 @@
 const express = require("express");
-const app = express();//app is like blueprint instance for server creation
+const app = express();
 const connectDB = require("../BACKEND/config/db");
 const cors = require("cors");
 
 require("dotenv").config();
 
-//Middleware
-app.use(
-  cors({
-    origin: "https://resume-craft-beryl.vercel.app",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  }),
-);
-app.options("*", cors());
+// ✅ CORS CONFIG
+const corsOptions = {
+  origin: "https://resume-craft-beryl.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions)); // ✅ important
+
 app.use(express.json());
 
-//connect to MongoDB
+// DB
 connectDB();
 
-//import resume routes
-const resumeRoutes = require('../BACKEND/routes/resumeRoutes');
-app.use('/api/resume', resumeRoutes); 
+// Routes
+const resumeRoutes = require("../BACKEND/routes/resumeRoutes");
+app.use("/api/resume", resumeRoutes);
 
-//import user router for auth
 const userRoutes = require("../BACKEND/routes/userRoutes");
-app.use('/api/users',userRoutes);
+app.use("/api/users", userRoutes);
 
-app.get('/',(req, res) => {
-  res.send('Hello Users Welcome to our Resume Craft')
-})
+// Test route
+app.get("/", (req, res) => {
+  res.send("Hello Users Welcome to our Resume Craft");
+});
 
-const PORT = process.env.PORT ||3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`)
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
