@@ -659,7 +659,7 @@ function saveApiKey() {
 }
 
 function getResumeContext() {
-  return `[Resume Context]
+  const context = `[Resume Context]
 Name: ${v("inpName") || "Not provided"}
 Title: ${v("inpTitle") || "Not provided"}
 Summary: ${v("inpSummary") || "Not provided"}
@@ -667,6 +667,7 @@ Skills: ${v("inpSkills") || "Not provided"}
 Experience: ${v("inpExperience") || "Not provided"}
 Projects: ${v("inpProjects") || "Not provided"}
 Education: ${v("inpEducation") || "Not provided"}`;
+  return context.length > 8000 ? context.substring(0, 8000) + "...(truncated)" : context;
 }
 
 function escapeHtml(s) {

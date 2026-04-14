@@ -631,8 +631,19 @@ function animateScore(target) {
 //  ATS ANALYSIS
 // ════════════════════════════════════════════════
 async function runAnalysis() {
-    const resume = getResumeText();
-    const job    = (document.getElementById("inpJobDesc").value || "").trim();
+    let resume = getResumeText();
+    let job    = (document.getElementById("inpJobDesc").value || "").trim();
+
+    // Prevent token limit errors by truncating extremely long inputs
+    // 12000 chars is roughly 3000 tokens. Total 6000 tokens fits well within Groq's 12k TPM free tier limit.
+    if (resume.length > 12000) {
+        resume = resume.substring(0, 12000);
+        console.warn("Resume text truncated to prevent API limits.");
+    }
+    if (job.length > 12000) {
+        job = job.substring(0, 12000);
+        console.warn("Job description truncated to prevent API limits.");
+    }
 
     if (!resume) { alert("Please upload or paste your resume text."); return; }
     if (!job)    { alert("Please paste the job description."); return; }
