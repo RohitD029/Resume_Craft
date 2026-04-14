@@ -733,7 +733,7 @@ async function sendMessage(overrideText) {
           Authorization: `Bearer ${API_KEY}`,
         },
         body: JSON.stringify({
-          model: "mixtral-8x7b-32768", // 🔥 best Groq model
+          model: "llama-3.3-70b-versatile", // 🔥 best Groq model
           messages: [
             {
               role: "system",

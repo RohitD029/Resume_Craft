@@ -30,7 +30,7 @@
 
 ## 🌟 Overview
 
-**Resume Craft** is a full-stack web application designed to help **engineering students and freshers** build professional, ATS-optimized resumes, check company eligibility, and prepare for placements — all in one place. Powered by **AI integrations** (Groq & Anthropic APIs), it offers real-time resume coaching, ATS score analysis, and intelligent suggestions.
+**Resume Craft** is a full-stack web application designed to help **engineering students and freshers** build professional, ATS-optimized resumes, check company eligibility, and prepare for placements — all in one place. Powered by **AI integrations** (Groq API), it offers real-time resume coaching, ATS score analysis, and intelligent suggestions.
 
 > **Built for placement season.** Check eligibility at 14+ top companies, build your resume with 5 templates, and get instant ATS feedback — all for free.
 
@@ -47,7 +47,7 @@
 - **Profile Photo Support** — Upload profile photos (Dark Sidebar template)
 
 ### 🤖 AI Resume Assistant
-- Integrated **Anthropic Claude API** for intelligent resume coaching
+- Integrated **Groq API** for intelligent resume coaching
 - Quick actions: *Review Resume*, *Fix Grammar*, *Enhance Profile*, *Suggest Skills*
 - Real-time chat interface with contextual resume suggestions
 
@@ -94,7 +94,7 @@
 | **UI Framework** | Bootstrap 5.3 |
 | **Backend** | Node.js, Express.js v5 |
 | **Database** | MongoDB (Mongoose ODM) |
-| **AI / LLM** | Groq API (LLaMA 3.3 70B), Anthropic Claude API |
+| **AI / LLM** | Groq API (LLaMA 3.3 70B) |
 | **Fonts** | Google Fonts (Inter, Poppins, DM Sans, Syne, Playfair Display, Raleway) |
 | **Dev Tools** | Nodemon, dotenv, CORS |
 
@@ -201,7 +201,7 @@ RESUME-BUILDER/
 ### AI Features Setup (Optional)
 
 - **ATS Score Checker** — Requires a [Groq API key](https://console.groq.com/) (`gsk_...`). Enter it in the ATS Checker sidebar.
-- **AI Resume Assistant** — Requires an [Anthropic API key](https://console.anthropic.com/) (`sk-ant-...`). Enter it in the Resume Builder sidebar.
+- **AI Resume Assistant** — Requires a [Groq API key](https://console.groq.com/) (`gsk_...`). Enter it in the Resume Builder sidebar.
 - Keys are stored securely in your browser's `localStorage` — they never leave your machine.
 
 ---
