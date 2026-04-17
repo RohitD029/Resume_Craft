@@ -431,13 +431,24 @@ function getResumePayload() {
     alert("You must be logged in to save resumes.");
     return null;
   }
+
+  const fullname = v("inpName").trim();
+  const email = v("inpEmail").trim();
+  const phone = v("inpPhone").trim();
+  const location = v("inpLocation").trim();
+
+  if (!fullname || !email || !phone || !location) {
+    alert("Please fill in Full Name, Email, Phone, and Location to save.");
+    return null;
+  }
+
   return {
     userId: userId,
-    fullname: v("inpName"),
+    fullname: fullname,
     jobTitle: v("inpTitle"),
-    email: v("inpEmail"),
-    phone: v("inpPhone"),
-    location: v("inpLocation"),
+    email: email,
+    phone: phone,
+    location: location,
     linkedinUrl: v("inpLinkedin"),
     gitUrl: v("inpGithub"),
     profsummary: v("inpSummary"),
