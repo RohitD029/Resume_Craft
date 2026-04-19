@@ -462,7 +462,7 @@ function handleFileSelect(e) {
 function processFile(file) {
     const ext = file.name.split(".").pop().toLowerCase();
     if (!["pdf","doc","docx","txt"].includes(ext)) {
-        alert("Please upload a PDF, DOC, DOCX, or TXT file.");
+        showToast("Please upload a PDF, DOC, DOCX, or TXT file.", "warning");
         return;
     }
     const reader = new FileReader();
@@ -645,10 +645,10 @@ async function runAnalysis() {
         console.warn("Job description truncated to prevent API limits.");
     }
 
-    if (!resume) { alert("Please upload or paste your resume text."); return; }
-    if (!job)    { alert("Please paste the job description."); return; }
+    if (!resume) { showToast("Please upload or paste your resume text.", "warning"); return; }
+    if (!job)    { showToast("Please paste the job description.", "warning"); return; }
     if (!API_KEY) {
-        alert("Please save your Groq API key (gsk_...) in the right sidebar first.");
+        showToast("Please save your Groq API key (gsk_...) in the right sidebar first.", "warning");
         document.getElementById("apiBanner").style.display = "block";
         return;
     }
@@ -1005,6 +1005,7 @@ function handleChatKey(e) {
         sendChatMessage();
     }
 }
-</script>
+    </script>
+    <script src="./js/toast.js"></script>
 </body>
 </html>

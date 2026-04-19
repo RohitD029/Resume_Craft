@@ -30,11 +30,13 @@ if (registerForm) {
 
       const data = await res.json();
 
-      alert("Registration successful!");
-      window.location.href = "login.html";
+      showToast("Registration successful!", "success");
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 1000);
     } catch (error) {
       console.error(error);
-      alert("Error registering user");
+      showToast("Error registering user", "error");
     }
   });
 }
@@ -74,15 +76,17 @@ if (loginForm) {
         localStorage.setItem("profile-branch", data.user.branch || "");
         localStorage.setItem("profile-year", data.user.year || "");
 
-        alert("Login Successful");
-        window.location.href = "dashboard.html";
+        showToast("Login Successful", "success");
+        setTimeout(() => {
+          window.location.href = "dashboard.html";
+        }, 1000);
       } else {
         notfound.innerText = data.message;
         notfound.style.display = "block";
       }
     } catch (error) {
       console.error(error);
-      alert("Server error");
+      showToast("Server error", "error");
     }
   });
 }

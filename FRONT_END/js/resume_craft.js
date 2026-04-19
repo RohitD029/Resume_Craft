@@ -428,7 +428,7 @@ const API_BASE_URL = "https://resume-craft-8b70.onrender.com/api/resume";
 function getResumePayload() {
   const userId = localStorage.getItem("profile-id");
   if (!userId) {
-    alert("You must be logged in to save resumes.");
+    showToast("You must be logged in to save resumes.", "error");
     return null;
   }
 
@@ -438,7 +438,7 @@ function getResumePayload() {
   const location = v("inpLocation").trim();
 
   if (!fullname || !email || !phone || !location) {
-    alert("Please fill in Full Name, Email, Phone, and Location to save.");
+    showToast("Please fill in Full Name, Email, Phone, and Location to save.", "warning");
     return null;
   }
 
@@ -491,11 +491,11 @@ async function saveResumeToDb() {
     });
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || "Failed to save resume.");
-    alert("Resume saved successfully!");
+    showToast("Resume saved successfully!", "success");
     loadSavedResumes();
   } catch (err) {
     console.error("Save Resume Error:", err);
-    alert("Error saving resume to backend. Check console for details.");
+    showToast("Error saving resume to backend. Check console for details.", "error");
   }
 }
 
@@ -545,7 +545,7 @@ async function loadSavedResumes() {
 function fillFormFromResume(id) {
   const resume = (window.savedResumesCache || {})[id];
   if (!resume) {
-    alert('Resume not found in cache. Click "Load Saved Resumes" again.');
+    showToast('Resume not found in cache. Click "Load Saved Resumes" again.', "error");
     return;
   }
 
@@ -598,9 +598,7 @@ function fillFormFromResume(id) {
 
 async function updateSavedResume() {
   if (!window.currentResumeId) {
-    alert(
-      "No generated resume selected to update. Please 'Load' a resume first.",
-    );
+    showToast("No generated resume selected to update. Please 'Load' a resume first.", "warning");
     return;
   }
   try {
@@ -612,19 +610,17 @@ async function updateSavedResume() {
       body: JSON.stringify(payload),
     });
     if (!response.ok) throw new Error("Failed to update resume.");
-    alert("Resume updated successfully!");
+    showToast("Resume updated successfully!", "success");
     loadSavedResumes();
   } catch (err) {
     console.error("Update Resume Error:", err);
-    alert("Error updating resume.");
+    showToast("Error updating resume.", "error");
   }
 }
 
 async function deleteSavedResume() {
   if (!window.currentResumeId) {
-    alert(
-      "No generated resume selected to delete. Please 'Load' a resume first.",
-    );
+    showToast("No generated resume selected to delete. Please 'Load' a resume first.", "warning");
     return;
   }
   if (!confirm("Are you sure you want to delete this resume?")) return;
@@ -633,12 +629,12 @@ async function deleteSavedResume() {
       method: "DELETE",
     });
     if (!response.ok) throw new Error("Failed to delete resume.");
-    alert("Resume deleted successfully!");
+    showToast("Resume deleted successfully!", "success");
     window.currentResumeId = null;
     loadSavedResumes();
   } catch (err) {
     console.error("Delete Resume Error:", err);
-    alert("Error deleting resume.");
+    showToast("Error deleting resume.", "error");
   }
 }
 
@@ -660,7 +656,7 @@ function toggleApiBanner() {
 function saveApiKey() {
   const key = document.getElementById("apiKeyInput").value.trim();
   if (!key) {
-    alert("Please enter a valid API key.");
+    showToast("Please enter a valid API key.", "warning");
     return;
   }
   API_KEY = key;
