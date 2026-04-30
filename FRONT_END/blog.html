@@ -30,8 +30,125 @@
         .blog-excerpt { color: var(--text-muted); font-size: 1rem; line-height: 1.6; margin-bottom: 20px; flex-grow: 1; }
         .blog-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: auto; }
         .blog-date { font-size: 0.9rem; color: var(--text-muted); }
-        .read-more { font-size: 0.95rem; font-weight: 600; color: var(--primary-color); text-decoration: none; }
+        .read-more { font-size: 0.95rem; font-weight: 600; color: var(--primary-color); text-decoration: none; cursor: pointer; }
         .read-more:hover { text-decoration: underline; }
+
+        /* Full article overlay */
+        .article-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px 20px;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+        }
+        .article-overlay.active {
+            display: flex;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .article-modal {
+            background: var(--surface-color);
+            border-radius: 20px;
+            max-width: 800px;
+            width: 100%;
+            padding: 50px;
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .article-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-color);
+            transition: background 0.2s, transform 0.2s;
+        }
+        .article-close:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: scale(1.1);
+        }
+        .article-modal .article-category {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .article-modal .article-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-color);
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+        .article-modal .article-meta {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .article-modal .article-banner {
+            width: 100%;
+            height: 200px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        .article-modal .article-body {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: var(--text-color);
+        }
+        .article-body h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 28px 0 12px;
+        }
+        .article-body p {
+            margin-bottom: 16px;
+        }
+        .article-body ul {
+            margin: 10px 0 20px 20px;
+            padding: 0;
+        }
+        .article-body ul li {
+            margin-bottom: 8px;
+            line-height: 1.7;
+        }
+        .article-body blockquote {
+            border-left: 4px solid var(--primary-color);
+            margin: 20px 0;
+            padding: 15px 20px;
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-muted);
+        }
 
         /* Footer simpler view */
         footer { margin-top: 50px; background-color: var(--surface-color); padding: 20px; text-align: center; border-top: 1px solid var(--border-color); }
@@ -64,7 +181,7 @@
 
         <div class="blog-grid">
             <!-- Article 1 -->
-            <article class="blog-card">
+            <article class="blog-card" onclick="openArticle(1)">
                 <div class="blog-img" style="background: linear-gradient(135deg, #3b82f6, #8b5cf6);"></div>
                 <div class="blog-content">
                     <div class="blog-category">Career Advice</div>
@@ -72,13 +189,13 @@
                     <p class="blog-excerpt">Applicant Tracking Systems filter out up to 75% of resumes before a human ever sees them. Learn the exact keywords and formatting strategies to ensure your application gets through.</p>
                     <div class="blog-footer">
                         <span class="blog-date">April 15, 2026</span>
-                        <a href="#" class="read-more">Read Article &rarr;</a>
+                        <span class="read-more">Read Article &rarr;</span>
                     </div>
                 </div>
             </article>
 
             <!-- Article 2 -->
-            <article class="blog-card">
+            <article class="blog-card" onclick="openArticle(2)">
                 <div class="blog-img" style="background: linear-gradient(135deg, #10b981, #3b82f6);"></div>
                 <div class="blog-content">
                     <div class="blog-category">Resume Tips</div>
@@ -86,13 +203,13 @@
                     <p class="blog-excerpt">Don't have professional experience yet? No problem. These five portfolio projects will instantly validate your coding skills to recruiters at top tech firms.</p>
                     <div class="blog-footer">
                         <span class="blog-date">April 02, 2026</span>
-                        <a href="#" class="read-more">Read Article &rarr;</a>
+                        <span class="read-more">Read Article &rarr;</span>
                     </div>
                 </div>
             </article>
 
             <!-- Article 3 -->
-            <article class="blog-card">
+            <article class="blog-card" onclick="openArticle(3)">
                 <div class="blog-img" style="background: linear-gradient(135deg, #f59e0b, #ef4444);"></div>
                 <div class="blog-content">
                     <div class="blog-category">Interview Prep</div>
@@ -100,16 +217,188 @@
                     <p class="blog-excerpt">Technical interviews are only half the battle. Discover how to effectively leverage the STAR method to ace your cultural and behavioral interviews with confidence.</p>
                     <div class="blog-footer">
                         <span class="blog-date">March 28, 2026</span>
-                        <a href="#" class="read-more">Read Article &rarr;</a>
+                        <span class="read-more">Read Article &rarr;</span>
                     </div>
                 </div>
             </article>
         </div>
     </main>
 
+    <!-- Article Overlay Modal -->
+    <div class="article-overlay" id="articleOverlay" onclick="closeArticle(event)">
+        <div class="article-modal" onclick="event.stopPropagation()">
+            <button class="article-close" onclick="closeArticle()">&times;</button>
+            <div id="articleBanner" class="article-banner"></div>
+            <div class="article-category" id="articleCategory"></div>
+            <h1 class="article-title" id="articleTitle"></h1>
+            <div class="article-meta" id="articleMeta"></div>
+            <div class="article-body" id="articleBody"></div>
+        </div>
+    </div>
+
     <footer>
         <p id="copyright">© 2026 Resume Craft. All rights reserved.</p>
     </footer>
+
+    <script>
+        const articles = {
+            1: {
+                category: "Career Advice",
+                title: "How to Beat the ATS: A Comprehensive Guide",
+                date: "April 15, 2026",
+                banner: "linear-gradient(135deg, #3b82f6, #8b5cf6)",
+                body: `
+                    <p>Applicant Tracking Systems (ATS) are software tools used by employers to filter, sort, and rank resumes before a human recruiter ever reads them. Studies show that <strong>up to 75% of resumes</strong> are rejected by ATS before reaching a hiring manager.</p>
+
+                    <h3>What is an ATS?</h3>
+                    <p>An ATS is a software application that automates the hiring process. Companies like Google, Amazon, and Infosys use ATS software to manage the large volume of applications they receive. The system scans your resume for specific keywords, formatting, and structure to determine if you are a good fit for the role.</p>
+
+                    <h3>Why Do Resumes Get Rejected?</h3>
+                    <ul>
+                        <li><strong>Missing Keywords:</strong> The resume doesn't contain the exact skills or phrases mentioned in the job description.</li>
+                        <li><strong>Poor Formatting:</strong> Using tables, images, headers/footers, or unusual fonts that the ATS cannot parse.</li>
+                        <li><strong>Wrong File Type:</strong> Submitting in formats like JPEG or PNG instead of PDF or DOCX.</li>
+                        <li><strong>Lack of Standard Sections:</strong> Missing sections like "Experience," "Education," or "Skills."</li>
+                    </ul>
+
+                    <h3>Strategies to Beat the ATS</h3>
+                    <p><strong>1. Mirror the Job Description:</strong> Carefully read the job posting and include the exact keywords and phrases used. If the job says "React.js," don't just write "React" — include both variations.</p>
+                    <p><strong>2. Use Standard Section Headings:</strong> Stick to common headings like "Work Experience," "Education," "Skills," and "Projects." Avoid creative names like "My Journey" or "What I Know."</p>
+                    <p><strong>3. Keep Formatting Simple:</strong> Use a single-column layout, standard fonts (Arial, Calibri, Times New Roman), and avoid graphics, logos, or icons inside your resume.</p>
+                    <p><strong>4. Save as PDF or DOCX:</strong> These are the most widely accepted formats. Always check the job posting for any specific format requirements.</p>
+                    <p><strong>5. Use Our ATS Checker:</strong> Resume Craft's built-in ATS Analyzer compares your resume against a job description using AI and gives you an exact compatibility score with actionable feedback.</p>
+
+                    <blockquote>"The best resume isn't the one that looks the prettiest — it's the one that gets past the ATS and into the hands of a real person."</blockquote>
+
+                    <h3>Key Takeaways</h3>
+                    <ul>
+                        <li>Always tailor your resume for each specific job application.</li>
+                        <li>Use a clean, ATS-friendly format without tables or images.</li>
+                        <li>Include both full terms and abbreviations (e.g., "Artificial Intelligence (AI)").</li>
+                        <li>Run your resume through an ATS checker before submitting.</li>
+                    </ul>
+                `
+            },
+            2: {
+                category: "Resume Tips",
+                title: "5 Projects Every CS Freshman Needs on Their Resume",
+                date: "April 02, 2026",
+                banner: "linear-gradient(135deg, #10b981, #3b82f6)",
+                body: `
+                    <p>As a Computer Science freshman, you may not have years of professional experience — and that's perfectly fine. What recruiters look for in entry-level candidates is <strong>proof of initiative, problem-solving ability, and hands-on coding skills</strong>. The best way to demonstrate all three? Portfolio projects.</p>
+
+                    <h3>1. Personal Portfolio Website</h3>
+                    <p>Build a responsive personal website using HTML, CSS, and JavaScript. This shows you understand front-end fundamentals, responsive design, and web deployment. Host it on GitHub Pages or Vercel for bonus points.</p>
+                    <ul>
+                        <li><strong>Skills demonstrated:</strong> HTML5, CSS3, JavaScript, Responsive Design, Git</li>
+                        <li><strong>Pro tip:</strong> Include links to your other projects on the portfolio itself.</li>
+                    </ul>
+
+                    <h3>2. CRUD Application (To-Do App / Notes App)</h3>
+                    <p>A simple Create-Read-Update-Delete application demonstrates that you understand how the full stack works — from the user interface to the database. Use technologies like Node.js + MongoDB or React + Firebase.</p>
+                    <ul>
+                        <li><strong>Skills demonstrated:</strong> REST APIs, Database Operations, Backend Logic, Full-Stack Development</li>
+                    </ul>
+
+                    <h3>3. Weather or API-Based App</h3>
+                    <p>Build an application that fetches real-time data from a public API (like OpenWeatherMap or a currency converter API). This shows you can work with external services, handle asynchronous operations, and parse JSON data.</p>
+                    <ul>
+                        <li><strong>Skills demonstrated:</strong> API Integration, Async/Await, JSON Parsing, Error Handling</li>
+                    </ul>
+
+                    <h3>4. Chat Application or Real-Time Feature</h3>
+                    <p>Even a basic real-time chat room using Socket.io or WebSockets demonstrates an understanding of real-time data, event-driven architecture, and network protocols — concepts that stand out on a fresher's resume.</p>
+                    <ul>
+                        <li><strong>Skills demonstrated:</strong> WebSockets, Real-Time Communication, Event Handling</li>
+                    </ul>
+
+                    <h3>5. Resume Builder (Like This One!)</h3>
+                    <p>Building your own resume builder is a powerful meta-project. It involves form handling, state management, PDF generation, and potentially backend storage. It also gives you a ready-made tool to use!</p>
+                    <ul>
+                        <li><strong>Skills demonstrated:</strong> DOM Manipulation, State Management, PDF Export, UI/UX Design</li>
+                    </ul>
+
+                    <blockquote>"Recruiters don't expect freshers to have 5 years of experience. They want to see curiosity, consistency, and code quality."</blockquote>
+
+                    <h3>How to Present Projects on Your Resume</h3>
+                    <ul>
+                        <li>Write the project name, tech stack, and 2-3 bullet points describing what you built and the impact.</li>
+                        <li>Link to live demos and GitHub repositories wherever possible.</li>
+                        <li>Quantify results when you can (e.g., "Reduced load time by 40%").</li>
+                    </ul>
+                `
+            },
+            3: {
+                category: "Interview Prep",
+                title: "Mastering the Behavioral Interview (STAR Method)",
+                date: "March 28, 2026",
+                banner: "linear-gradient(135deg, #f59e0b, #ef4444)",
+                body: `
+                    <p>Technical skills may get your resume shortlisted, but <strong>behavioral interviews decide whether you get hired</strong>. Companies like TCS, Wipro, Google, and Amazon dedicate entire interview rounds to assessing your soft skills, teamwork, and cultural fit.</p>
+
+                    <h3>What is the STAR Method?</h3>
+                    <p>The STAR method is a structured framework for answering behavioral interview questions. It stands for:</p>
+                    <ul>
+                        <li><strong>S — Situation:</strong> Describe the context. What was happening? Where were you?</li>
+                        <li><strong>T — Task:</strong> What was your responsibility or challenge?</li>
+                        <li><strong>A — Action:</strong> What specific steps did you take to address the situation?</li>
+                        <li><strong>R — Result:</strong> What was the outcome? What did you learn?</li>
+                    </ul>
+
+                    <h3>Example: "Tell me about a time you worked in a team."</h3>
+                    <p><strong>Situation:</strong> "During my 4th semester, our team of 4 was assigned a database management mini-project with a 2-week deadline."</p>
+                    <p><strong>Task:</strong> "I was responsible for designing the database schema and connecting the backend API to the front end."</p>
+                    <p><strong>Action:</strong> "I created an ER diagram first, shared it with the team for feedback, then implemented the schema in MongoDB. When a teammate fell behind on the frontend, I paired with them to integrate the API calls."</p>
+                    <p><strong>Result:</strong> "We submitted on time, received the highest grade in our section, and the professor cited our project as an example for the next batch."</p>
+
+                    <h3>Common Behavioral Questions You Should Prepare</h3>
+                    <ul>
+                        <li>Tell me about a time you faced a conflict in a team. How did you handle it?</li>
+                        <li>Describe a situation where you had to learn something quickly.</li>
+                        <li>Give an example of a project you led from start to finish.</li>
+                        <li>Tell me about a time you failed. What did you learn?</li>
+                        <li>How do you prioritize tasks when you have multiple deadlines?</li>
+                    </ul>
+
+                    <h3>Tips for Success</h3>
+                    <p><strong>1. Prepare 5-6 Stories:</strong> Most behavioral questions can be answered with a handful of well-prepared stories from your college, internship, or project experiences.</p>
+                    <p><strong>2. Be Specific:</strong> Avoid vague answers. Use numbers, dates, and concrete outcomes wherever possible.</p>
+                    <p><strong>3. Practice Out Loud:</strong> Rehearse your answers with a friend or in front of a mirror. Speaking your answer aloud is very different from thinking it.</p>
+                    <p><strong>4. Stay Positive:</strong> Even when discussing failures or conflicts, focus on what you learned and how you grew from the experience.</p>
+
+                    <blockquote>"Behavioral interviews aren't about giving the 'right' answer. They're about showing who you are under pressure and how you handle real-world situations."</blockquote>
+                `
+            }
+        };
+
+        function openArticle(id) {
+            const article = articles[id];
+            if (!article) return;
+
+            document.getElementById('articleBanner').style.background = article.banner;
+            document.getElementById('articleCategory').textContent = article.category;
+            document.getElementById('articleTitle').textContent = article.title;
+            document.getElementById('articleMeta').textContent = "Published on " + article.date + " • Resume Craft Blog";
+            document.getElementById('articleBody').innerHTML = article.body;
+
+            const overlay = document.getElementById('articleOverlay');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeArticle(event) {
+            if (event && event.target !== event.currentTarget && !event.target.classList.contains('article-close')) return;
+            const overlay = document.getElementById('articleOverlay');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeArticle();
+            }
+        });
+    </script>
 
     <script src="../js/theme.js"></script>
 </body>
